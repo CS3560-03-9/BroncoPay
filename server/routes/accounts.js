@@ -8,7 +8,9 @@ router.get('/', async function (req, res) {
 		const accounts = await accountController.getAllUsers();
 		res.status(200).json({
 			status: 'success',
-			data: accounts,
+			data: {
+				accounts: accounts,
+			},
 		});
 	} catch (err) {
 		res.status(500).json({
@@ -68,7 +70,7 @@ router.delete('/:handler', async function (req, res) {
 		await accountController.deleteUser(handler);
 		res.status(200).json({
 			status: 'success',
-			data: undefined,
+			data: null,
 		});
 	} catch (err) {
 		res.status(500).json({
