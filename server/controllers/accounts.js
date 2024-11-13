@@ -4,4 +4,16 @@ async function getAllUsers() {
 	return await db.query('SELECT * FROM `account`');
 }
 
-module.exports = {getAllUsers};
+async function getUser(handler) {
+	return await db.query('SELECT * FROM `account` WHERE `handler` = ?', [handler]);
+}
+
+async function deleteUser(handler) {
+	return await db.query('DELETE FROM `account` WHERE `handler` = ?', [handler]);
+}
+
+module.exports = {
+	getAllUsers,
+	getUser,
+	deleteUser,
+};

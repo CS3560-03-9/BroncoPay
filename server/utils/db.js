@@ -8,9 +8,9 @@ const pool = mysql.createPool({
 	connectionLimit: 10,
 })
 
-async function query(sql) {
+async function query(sql, data) {
 	try {
-		const results = await pool.query(sql);
+		const results = await pool.execute(sql, data);
 		return results[0];
 	} catch (err) {
 		console.log(err);
