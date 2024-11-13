@@ -8,7 +8,7 @@ router.get('/', async function(req, res) {
         const accounts = await accountController.getAllUsers();
         res.status(200).json({
             status: 'success',
-            data: accounts,
+            data: { accounts },
         });
     } catch (err) {
         res.status(500).json({

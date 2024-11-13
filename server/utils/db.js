@@ -1,19 +1,17 @@
 const mysql = require('mysql');
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
+    connection_limit: 10,
     host: 'localhost',
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
-    port: 3306,
     database: 'bronco',
 })
 
-connection.connect(function (err, db) {})
-
 async function query(sql) {
-    connection.query(sql, function (err, results) {
-        if (err) throw err;
+    pool.query(sql, function (err, results) {
+        if (err) console.error(err.message)
         return results;
     });
 }
 
-module.exports = query;
+module.exports = { query };
