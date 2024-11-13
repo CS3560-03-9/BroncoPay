@@ -14,7 +14,6 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - db:/var/lib/mysql
       - ./server/scripts:/docker-entrypoint-initdb.d:ro
 volumes:
   db:
