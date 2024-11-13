@@ -1,19 +1,20 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    connectionLimit: 10,
+	host: 'localhost',
+	database: process.env.DB_DATABASE,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	connectionLimit: 10,
 })
 
 async function query(sql) {
-    console.log(process.env.DB_USER);
-    pool.query(sql, (err, results) => {
-        if (err) console.log(err);
-        return results;
-    })
+	try {
+		const results = await pool.query(sql);
+		return results[0];
+	} catch (err) {
+		console.log(err);
+	}
 }
 
-module.exports = { query };
+module.exports = {query};
