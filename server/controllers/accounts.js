@@ -1,6 +1,6 @@
 const db = require("../utils/db");
 
-async function getAllUsers() {
+async function getUsers() {
 	return await db.query('SELECT * FROM `accounts`');
 }
 
@@ -13,7 +13,7 @@ async function deleteUser(handler) {
 }
 
 module.exports = {
-	getAllUsers,
+	getUsers,
 	getUser,
 	deleteUser,
 };

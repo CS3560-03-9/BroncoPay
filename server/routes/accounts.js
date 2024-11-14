@@ -5,7 +5,7 @@ const accountController = require('../controllers/accounts');
 
 router.get('/', async function (req, res) {
 	try {
-		const accounts = await accountController.getAllUsers();
+		const accounts = await accountController.getUsers();
 		res.status(200).json({
 			status: 'success',
 			data: {
@@ -33,7 +33,6 @@ router.get('/:handler', async function (req, res) {
 	}
 	try {
 		const account = await accountController.getUser(handler);
-		console.log(account)
 		if (account.length === 0) {
 			res.status(404).json({
 				status: 'fail',
@@ -45,7 +44,9 @@ router.get('/:handler', async function (req, res) {
 		}
 		res.status(200).json({
 			status: 'success',
-			data: account,
+			data: {
+				account: account,
+			},
 		});
 	} catch (err) {
 		res.status(500).json({
