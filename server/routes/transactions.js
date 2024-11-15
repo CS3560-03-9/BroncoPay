@@ -1,7 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const {validationResult} = require("express-validator");
 
+const router = express.Router();
 const transactionsController = require('../controllers/transactions');
+const transactionsValidator = require('../validators/transactions');
 
 router.get('/:handler', async function (req, res) {
 	const {handler} = req.params;
@@ -30,8 +32,17 @@ router.get('/:handler', async function (req, res) {
 	}
 });
 
-router.post('/', async function (req, res) {
+router.post('/', transactionsValidator.createTransactionValidator,
+	async function (req, res) {
 	try {
+		const validation = validationResult(req.body);
+		if (!validation.isEmpty()) {
+			res.status(200).json({
+				status: 'fail',
+				data: validation.array(),
+			});
+			return;
+		}
 		await transactionsController.createTransaction(req.body);
 		res.status(200).json({
 			status: 'success',

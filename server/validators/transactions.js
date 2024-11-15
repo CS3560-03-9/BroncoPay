@@ -14,3 +14,7 @@ const createTransactionValidator = [
 	body("description").trim().escape()
 		.isLength({min: 0, max: 1024}).withMessage("description must be between 0 to 1024 characters"),
 ]
+
+module.exports = {
+	createTransactionValidator,
+}

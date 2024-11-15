@@ -9,6 +9,7 @@ require('dotenv').config({
 
 const indexRouter = require('./routes/index');
 const accountsRouter = require('./routes/accounts');
+const transactionsRouter = require('./routes/transactions');
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/accounts', accountsRouter);
+app.use('/transactions', transactionsRouter);
 
 module.exports = app;
