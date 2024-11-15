@@ -43,3 +43,9 @@ CREATE TABLE subscriptions (
     FOREIGN KEY (from_handler) REFERENCES accounts(handler),
     FOREIGN KEY (to_handler) REFERENCES accounts(handler)
 );
+
+CREATE TABLE Business (
+    id INT NOT NULL AUTO_INCREMENT,
+    handler VARCHAR(255),
+    PRIMARY KEY (id)
+);
