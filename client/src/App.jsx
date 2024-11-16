@@ -40,6 +40,7 @@ function App() {
       {/* <BasicTable /> */}
       {/* <ButtonUsage/> */}
       <Outlet />
+      
     </AppProvider>
   );
 }
