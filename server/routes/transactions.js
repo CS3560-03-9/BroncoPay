@@ -1,5 +1,5 @@
 const express = require('express');
-const {validationResult} = require("express-validator");
+const {validationResult} = require('express-validator');
 
 const router = express.Router();
 const transactionsController = require('../controllers/transactions');
@@ -35,7 +35,7 @@ router.get('/:handler', async function (req, res) {
 router.post('/', transactionsValidator.createTransactionValidator,
 	async function (req, res) {
 	try {
-		const validation = validationResult(req.body);
+		const validation = validationResult(req);
 		if (!validation.isEmpty()) {
 			res.status(200).json({
 				status: 'fail',
