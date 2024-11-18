@@ -8,7 +8,6 @@ async function getTransactionsByAccount(handler) {
 async function createTransaction(body) {
 	const fromAccount = await accountsController.getUser(body.fromHandler);
 	const toAccountExists = await accountsController.existsUser(body.toHandler);
-	console.log(fromAccount);
 	if (fromAccount.length === 0 || !toAccountExists) {
 		throw new Error('account(s) does not exist');
 	}
