@@ -1,14 +1,14 @@
 const db = require('../utils/db');
 
-async function getUsers() {
+async function getAccounts() {
 	return await db.query('SELECT * FROM `accounts`');
 }
 
-async function getUser(handler) {
+async function getAccount(handler) {
 	return await db.query('SELECT * FROM `accounts` WHERE `handler` = ?', [handler]);
 }
 
-async function deleteUser(handler) {
+async function deleteAccount(handler) {
 	return await db.query('DELETE FROM `accounts` WHERE `handler` = ?', [handler]);
 }
 
@@ -16,7 +16,7 @@ async function setSpendingLimit(handler, limit) {
 	return await db.query('UPDATE `accounts` SET `spending_limit` = ? WHERE `handler` = ?', [limit, handler]);
 }
 
-async function existsUser(handler) {
+async function accountExists(handler) {
 	return await db.query('SELECT EXISTS(SELECT * FROM `accounts` WHERE `handler` = ?)', [handler]);
 }
 
@@ -25,10 +25,10 @@ async function changeBalance(handler, amount) {
 }
 
 module.exports = {
-	getUsers,
-	getUser,
-	deleteUser,
+	getAccounts,
+	getAccount,
+	deleteAccount,
 	setSpendingLimit,
-	existsUser,
+	accountExists,
 	changeBalance,
 };

@@ -6,7 +6,7 @@ async function getSubscriptionsByAccount(handler) {
 }
 
 async function createSubscription(body) {
-	const fromAccount = await accountsController.getUser(body.fromHandler);
+	const fromAccount = await accountsController.getAccount(body.fromHandler);
 	const subscriptionInfo = undefined; // TODO GET SUB INFO
 	if (fromAccount.length === 0) {
 		throw new Error('account does not exist');

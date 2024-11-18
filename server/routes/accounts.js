@@ -5,7 +5,7 @@ const accountController = require('../controllers/accounts');
 
 router.get('/', async function (req, res) {
 	try {
-		const accounts = await accountController.getUsers();
+		const accounts = await accountController.getAccounts();
 		res.status(200).json({
 			status: 'success',
 			data: {
@@ -32,7 +32,7 @@ router.get('/:handler', async function (req, res) {
 		return;
 	}
 	try {
-		const account = await accountController.getUser(handler);
+		const account = await accountController.getAccount(handler);
 		if (account.length === 0) {
 			res.status(404).json({
 				status: 'fail',
@@ -68,7 +68,7 @@ router.patch('/:handler', async function (req, res) {
 		return;
 	}
 	try {
-		const account = await accountController.getUser(handler);
+		const account = await accountController.getAccount(handler);
 		if (account.length === 0) {
 			res.status(404).json({
 				status: 'fail',
@@ -106,7 +106,7 @@ router.delete('/:handler', async function (req, res) {
 		return;
 	}
 	try {
-		await accountController.deleteUser(handler);
+		await accountController.deleteAccount(handler);
 		res.status(204).json({
 			status: 'success',
 			data: null,
