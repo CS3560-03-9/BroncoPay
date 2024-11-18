@@ -56,6 +56,44 @@ router.get('/:handler', async function (req, res) {
 	}
 });
 
+router.patch('/:handler', async function (req, res) {
+	const {handler} = req.params;
+	if (handler === undefined) {
+		res.status(400).json({
+			status: 'fail',
+			data: {
+				handler: 'handler is missing',
+			},
+		});
+		return;
+	}
+	try {
+		const account = await accountController.getUser(handler);
+		if (account.length === 0) {
+			res.status(404).json({
+				status: 'fail',
+				data: {
+					handler: 'account not found',
+				},
+			});
+			return;
+		}
+		const limit = req.body.spending_limit;
+		if (limit !== undefined) {
+			await accountController.setSpendingLimit(handler, limit);
+		}
+		res.status(204).json({
+			status: 'success',
+			data: null,
+		});
+	} catch (err) {
+		res.status(500).json({
+			status: 'error',
+			message: err.message,
+		});
+	}
+});
+
 router.delete('/:handler', async function (req, res) {
 	const {handler} = req.params;
 	if (handler === undefined) {
@@ -69,7 +107,7 @@ router.delete('/:handler', async function (req, res) {
 	}
 	try {
 		await accountController.deleteUser(handler);
-		res.status(200).json({
+		res.status(204).json({
 			status: 'success',
 			data: null,
 		});
