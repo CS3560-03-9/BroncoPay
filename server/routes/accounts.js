@@ -78,7 +78,7 @@ router.patch('/:handler', async function (req, res) {
 			});
 			return;
 		}
-		const limit = req.body.spending_limit;
+		const limit = req.body.spendingLimit;
 		if (limit !== undefined) {
 			await accountController.setSpendingLimit(handler, limit);
 		}
