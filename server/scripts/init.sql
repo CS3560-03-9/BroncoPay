@@ -5,10 +5,8 @@ USE bronco;
 CREATE TABLE accounts (
     handler VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    account_type ENUM('PERSONAL', 'BUSINESS') NOT NULL,
     balance INT NOT NULL,
     spending_limit INT NOT NULL,
-    creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (email),
     PRIMARY KEY (handler)
 );
@@ -36,15 +34,12 @@ CREATE TABLE transactions (
 
 CREATE TABLE subscriptions (
     subscription_id INT NOT NULL AUTO_INCREMENT,
-    from_handler VARCHAR(255) NOT NULL,
-    to_handler VARCHAR(255) NOT NULL,
-    amount INT NOT NULL,
-    subscription_interval INT NOT NULL,
-    subscription_desc VARCHAR(255),
+    handler VARCHAR(255) NOT NULL,
+    pledge_id INT NOT NULL,
     creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (subscription_id),
-    FOREIGN KEY (from_handler) REFERENCES accounts(handler) ON DELETE CASCADE,
-    FOREIGN KEY (to_handler) REFERENCES accounts(handler) ON DELETE CASCADE
+    FOREIGN KEY (handler) REFERENCES accounts(handler) ON DELETE CASCADE,
+    FOREIGN KEY (pledge_id) REFERENCES pledges(pledge_id) ON DELETE CASCADE
 );
 
 CREATE TABLE businesses (
@@ -53,12 +48,22 @@ CREATE TABLE businesses (
     FOREIGN KEY (handler) REFERENCES accounts(handler) ON DELETE CASCADE
 );
 
-INSERT INTO accounts (handler, email, account_type, balance, spending_limit) VALUES
-('test1', 'test1@gmail.com', 'PERSONAL', 123, 10),
-('test2', 'test2@gmail.com', 'PERSONAL', 143, 7),
-('test3', 'test3@gmail.com', 'PERSONAL', 200, 140),
-('test4', 'test4@gmail.com', 'BUSINESS', 0, 11),
-('test5', 'test5@gmail.com', 'PERSONAL', 334, 23);
+CREATE TABLE pledges (
+    pledge_id INT NOT NULL AUTO_INCREMENT,
+    handler VARCHAR(255) NOT NULL,
+    cost INT NOT NULL,
+    pledge_interval INT NOT NULL,
+    pledge_desc VARCHAR(255),
+    PRIMARY KEY (pledge_id),
+    FOREIGN KEY (handler) REFERENCES businesses(handler) ON DELETE CASCADE
+)
+
+INSERT INTO accounts (handler, email, balance, spending_limit) VALUES
+('test1', 'test1@gmail.com', 123, 10),
+('test2', 'test2@gmail.com', 143, 7),
+('test3', 'test3@gmail.com', 200, 140),
+('test4', 'test4@gmail.com', 0, 11),
+('test5', 'test5@gmail.com', 334, 23);
 
 INSERT INTO transactions (from_handler, to_handler, amount, transaction_desc) VALUES
 ('test1', 'test2', 123, 'money'),
