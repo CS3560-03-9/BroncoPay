@@ -6,7 +6,8 @@ import "./index.css";
 import App from "./App.jsx";
 import Layout from "./layout/Layout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-import Settings from "./pages/Settings.jsx";
+import Payment from "./pages/Payment.jsx";
+import Login from "./pages/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
             Component: Dashboard,
           },
           {
-            path: "/settings",
-            Component: Settings,
+            path: "/payment",
+            Component: Payment,
+          },
+          {
+            path: "/login",
+            Component: Login,
           },
         ],
       },
