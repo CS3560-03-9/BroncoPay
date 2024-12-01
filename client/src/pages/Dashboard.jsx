@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import CardSection from "../components/dashBoardCards";
-import { fetchUserBalance } from "../api/accounts";
+import { fetchUser } from "../api/accounts";
 
 import { Box, Typography } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -13,7 +13,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchUserBalance(tempData.user);
+    fetchUser(tempData.user);
   });
 
   const handlePayment = () => {
