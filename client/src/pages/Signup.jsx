@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
   FormControl,
+  Divider,
 } from "@mui/material";
 
 export default function Login() {
@@ -17,7 +18,8 @@ export default function Login() {
       sx={{
         textAlign: "center",
         mt: 4,
-        padding: 10,
+        pt: 10,
+        pb: 8,
         minWidth: "20vw",
         boxShadow: 6,
         border: 1,
@@ -60,6 +62,12 @@ export default function Login() {
           onClick={handleSignUp}
         >
           Sign up
+        </Button>
+        <Divider variant="middle" sx={{ my: 3 }}>
+          <Typography variant="subtitle1">or</Typography>
+        </Divider>
+        <Button href="/login" variant="text" size="small">
+          Login
         </Button>
       </FormControl>
     </Container>

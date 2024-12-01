@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { SignInPage } from "@toolpad/core/SignInPage";
 
-import { Button, Link } from "@mui/material";
+import { Button } from "@mui/material";
 
 const providers = [
   { id: "google", name: "Google" },
@@ -38,7 +38,7 @@ export default function Login() {
 
   const SignUpButton = () => {
     return (
-      <Button component={Link} href="/signup" variant="text" size="small">
+      <Button href="/signup" variant="text" size="sm" fullWidth>
         Sign Up
       </Button>
     );
