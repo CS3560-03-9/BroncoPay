@@ -18,16 +18,18 @@ export default function Login() {
       sx={{
         textAlign: "center",
         mt: 4,
-        pt: 10,
-        pb: 8,
+        py: 5,
         minWidth: "20vw",
         boxShadow: 6,
         border: 1,
         borderColor: "gray",
       }}
     >
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", mb: 4 }}>
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
         Sign up
+      </Typography>
+      <Typography variant="subtitle2" color="gray">
+        Create a new account
       </Typography>
       <FormControl fullWidth>
         <TextField
