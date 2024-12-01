@@ -1,37 +1,49 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { SignInPage } from "@toolpad/core/SignInPage";
+
+const providers = [
+  { id: "google", name: "Google" },
+  { id: "credentials", name: "Credentials" },
+];
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  // Handles clicking the sign in button
+  const signIn = async (provider, formData) => {
+    try {
+      if (provider.id === "credentials") {
+        console.log(
+          `Received Provider: ${provider.name}, Email: ${formData.get("email")}, Password: ${formData.get("password")}`
+        );
+      } else if (provider.id === "google") {
+        console.log(`Received Provider: ${provider.name}`);
+        throw new Error("Google sign in is not implemented yet.");
+        // ** TODO: Handle google oauth here **
+      }
+
+      // ** TODO: Do some oauth/api shenanigans here **
+
+      // Assuming successful
+      navigate("/"); // redirect to dashboard
+    } catch (err) {
+      console.log(err);
+      alert("Error signing in. Please try again.");
+    }
+  };
+
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Login
-      </Typography>
-      <form>
-        <TextField
-          label="Email"
-          type="email"
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Password"
-          type="password"
-          fullWidth
-          margin="normal"
-          required
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 2 }}
-        >
-          Login
-        </Button>
-      </form>
-    </Container>
+    <SignInPage
+      sx={{ minWidth: "100vw" }}
+      signIn={signIn}
+      providers={providers}
+      slotProps={{
+        emailField: { variant: "standard" },
+        passwordField: { variant: "standard" },
+        submitButton: { variant: "outlined" },
+      }}
+    />
   );
 }

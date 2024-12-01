@@ -25,11 +25,11 @@ const router = createBrowserRouter([
             path: "/payment",
             Component: Payment,
           },
-          {
-            path: "/login",
-            Component: Login,
-          },
         ],
+      },
+      {
+        path: "/login",
+        Component: Login,
       },
     ],
   },
