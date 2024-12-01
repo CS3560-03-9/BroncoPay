@@ -1,8 +1,6 @@
-import React from "react";
-import BasicPie from "../components/pieChart";
-import BasicScatter from "../components/scatter";
-import PaymentButton from "../components/button";
+import React, { useEffect } from "react";
 import CardSection from "../components/dashBoardCards";
+import { fetchUserBalance } from "../api/accounts";
 
 import { Box, Typography } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -10,6 +8,14 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PageTitle from "../components/PageTitle";
 
 export default function Dashboard() {
+  const tempData = {
+    user: "test1",
+  };
+
+  useEffect(() => {
+    fetchUserBalance(tempData.user);
+  });
+
   const handlePayment = () => {
     console.log("Payment button clicked");
   };
