@@ -8,6 +8,7 @@ import Layout from "./layout/Layout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Payment from "./pages/Payment.jsx";
 import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         Component: Login,
+      },
+      {
+        path: "/signup",
+        Component: Signup,
       },
     ],
   },

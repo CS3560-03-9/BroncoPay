@@ -3,6 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { SignInPage } from "@toolpad/core/SignInPage";
 
+import { Button, Link } from "@mui/material";
+
 const providers = [
   { id: "google", name: "Google" },
   { id: "credentials", name: "Credentials" },
@@ -34,6 +36,14 @@ export default function Login() {
     }
   };
 
+  const SignUpButton = () => {
+    return (
+      <Button component={Link} href="/signup" variant="text" size="small">
+        Sign Up
+      </Button>
+    );
+  };
+
   return (
     <SignInPage
       sx={{ minWidth: "100vw" }}
@@ -44,6 +54,7 @@ export default function Login() {
         passwordField: { variant: "standard" },
         submitButton: { variant: "outlined" },
       }}
+      slots={{ signUpLink: SignUpButton }}
     />
   );
 }
