@@ -1,6 +1,9 @@
 import React from "react";
 import PaymentButton from "../components/button";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
+import PaymentIcon from "@mui/icons-material/Payment";
+
+import PageTitle from "../components/PageTitle";
 
 export default function Payment() {
   const handleDepositMoney = () => {
@@ -14,10 +17,18 @@ export default function Payment() {
   };
 
   return (
-    <div style={{ padding: "20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
-      <h1>Deposits/Payments</h1>
+    <Box>
+      <PageTitle title="Payments" icon={<PaymentIcon fontSize="large" />} />
 
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: "20px", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
         <Card
           sx={{
             width: 600,
@@ -43,16 +54,27 @@ export default function Payment() {
               }}
             >
               <CardContent>
-                <Typography variant="h5" component="h2" sx={{ marginBottom: 2 }}>
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  sx={{ marginBottom: 2 }}
+                >
                   Enter Amount
                 </Typography>
                 <input
                   type="number"
                   step="0.01"
                   placeholder="$0.00"
-                  style={{ width: "100%", padding: "10px", marginBottom: "10px", paddingBottom: "20px" }}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    marginBottom: "10px",
+                    paddingBottom: "20px",
+                  }}
                 />
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <PaymentButton
                     onClick={() => console.log("Cancel button clicked")}
                     label="Cancel"
@@ -99,16 +121,30 @@ export default function Payment() {
               }}
             >
               <CardContent>
-                <Typography variant="h5" component="h2" sx={{ marginBottom: 2 }}>
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  sx={{ marginBottom: 2 }}
+                >
                   Enter Amount
                 </Typography>
                 <input
                   type="number"
                   step="0.01"
                   placeholder="$0.00"
-                  style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    marginBottom: "10px",
+                  }}
                 />
-                <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: "20px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingBottom: "20px",
+                  }}
+                >
                   <PaymentButton
                     onClick={() => console.log("Cancel button clicked")}
                     label="Cancel"
@@ -129,6 +165,6 @@ export default function Payment() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </Box>
   );
 }

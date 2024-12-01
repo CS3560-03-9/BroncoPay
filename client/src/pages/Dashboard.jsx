@@ -4,7 +4,10 @@ import BasicScatter from "../components/scatter";
 import PaymentButton from "../components/button";
 import CardSection from "../components/dashBoardCards";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+
+import PageTitle from "../components/PageTitle";
 
 export default function Dashboard() {
   const handlePayment = () => {
@@ -12,9 +15,11 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ textAlign: "center" }}>
-      <h1>Dashboard</h1>
-
+    <Box>
+      <PageTitle
+        title={"Dashboard"}
+        icon={<DashboardIcon fontSize="large" />}
+      />
       <div
         className="dashboard-container"
         style={{
@@ -41,10 +46,10 @@ export default function Dashboard() {
         </div>
 
         {/* Charts Section */}
-        <div className="charts-section" style={{ width: "55%" }}>
+        {/* <div className="charts-section" style={{ width: "55%" }}>
           <BasicPie />
           <BasicScatter />
-        </div>
+        </div> */}
       </div>
 
       {/* Payment Button*/}
