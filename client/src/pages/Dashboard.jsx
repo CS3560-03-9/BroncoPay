@@ -4,21 +4,23 @@ import BasicScatter from "../components/scatter";
 import PaymentButton from "../components/button";
 import CardSection from "../components/dashBoardCards";
 
+import { Box } from "@mui/material";
+
 export default function Dashboard() {
   const handlePayment = () => {
     console.log("Payment button clicked");
   };
 
   return (
-    <div>
+    <Box sx={{ textAlign: "center" }}>
       <h1>Dashboard</h1>
 
       <div
         className="dashboard-container"
         style={{
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "flex-start", 
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
           padding: "0 5%",
         }}
       >
@@ -56,6 +58,6 @@ export default function Dashboard() {
       >
         <PaymentButton onClick={handlePayment}>Pay Now</PaymentButton>
       </div> */}
-    </div>
+    </Box>
   );
 }
