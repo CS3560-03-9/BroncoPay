@@ -33,16 +33,6 @@ CREATE TABLE transactions (
     FOREIGN KEY (to_handler) REFERENCES accounts(handler)
 );
 
-CREATE TABLE subscriptions (
-    subscription_id INT NOT NULL AUTO_INCREMENT,
-    handler VARCHAR(255) NOT NULL,
-    pledge_id INT NOT NULL,
-    creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (subscription_id),
-    FOREIGN KEY (handler) REFERENCES accounts(handler) ON DELETE CASCADE,
-    FOREIGN KEY (pledge_id) REFERENCES pledges(pledge_id) ON DELETE CASCADE
-);
-
 CREATE TABLE businesses (
     handler VARCHAR(255),
     PRIMARY KEY (handler),
@@ -57,7 +47,17 @@ CREATE TABLE pledges (
     pledge_desc VARCHAR(255),
     PRIMARY KEY (pledge_id),
     FOREIGN KEY (handler) REFERENCES businesses(handler) ON DELETE CASCADE
-)
+);
+
+CREATE TABLE subscriptions (
+    subscription_id INT NOT NULL AUTO_INCREMENT,
+    handler VARCHAR(255) NOT NULL,
+    pledge_id INT NOT NULL,
+    creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (subscription_id),
+    FOREIGN KEY (handler) REFERENCES accounts(handler) ON DELETE CASCADE,
+    FOREIGN KEY (pledge_id) REFERENCES pledges(pledge_id) ON DELETE CASCADE
+);
 
 INSERT INTO accounts (handler, email, balance, spending_limit) VALUES
 ('test1', 'test1@gmail.com', 123, 10),
