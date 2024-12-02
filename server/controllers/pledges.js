@@ -6,7 +6,7 @@ async function getPledges(handler) {
 }
 
 async function createPledge(body) {
-    const businessExists = await this.businessExists(body.handler);
+    const businessExists = await businessController.businessExists(body.handler);
     if (!businessExists) {
         throw new Error('business does not exist');
     }
