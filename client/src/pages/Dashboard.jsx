@@ -12,37 +12,45 @@ import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [activity, setActivity] = useState(null);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState({
+    handler: "",
+    email: "",
+    account_type: "",
+    balance: 0,
+    spending_limit: 0,
+    creation: "",
+  });
+  const [activity, setActivity] = useState([]);
 
   const tempData = {
-    user: "test1",
+    user: "test2",
   };
 
   useEffect(() => {
-    fetchUser(tempData.user)
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const fetchData = async () => {
+      try {
+        const user = await fetchUser(tempData.user);
+        setUser(user);
 
-    fetchActivity(tempData.user)
-      .then((data) => {
-        setActivity(data);
+        const transactions = await fetchActivity(tempData.user);
+        setActivity(transactions);
+
         setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error(err);
-      });
+        setError(err);
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
   const handlePayment = () => {
     console.log("Payment button clicked");
   };
 
-  if (loading) {
+  if (loading || error) {
     return (
       <Box
         sx={{
@@ -74,7 +82,7 @@ export default function Dashboard() {
       >
         {/* Card Section */}
         <div className="card-section" style={{ width: "40%" }}>
-          <AccountBalanceCard balance={user.account.balance} sx={{ mt: 3 }} />
+          <AccountBalanceCard balance={user.balance} sx={{ mt: 3 }} />
           <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
         </div>
 
