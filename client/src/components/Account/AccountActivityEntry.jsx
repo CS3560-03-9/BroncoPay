@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Typography, Box } from "@mui/material";
 
 export default function AccountActivityEntry({ entry }) {
