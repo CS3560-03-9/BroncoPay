@@ -5,6 +5,10 @@ async function getPledges(handler) {
     return await db.query('SELECT * FROM `pledges` WHERE `handler` = ?', [handler]);
 }
 
+async function getPledge(id) {
+	return await db.query('SELECT * FROM `pledges` WHERE `pledge_id` = ?', [id]);
+}
+
 async function createPledge(body) {
     const businessExists = await businessController.businessExists(body.handler);
     if (!businessExists) {
@@ -16,5 +20,6 @@ async function createPledge(body) {
 
 module.exports = {
     getPledges,
+	getPledge,
     createPledge,
 }
