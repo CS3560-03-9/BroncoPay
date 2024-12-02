@@ -6,13 +6,13 @@ export async function fetchUser(user) {
         "Content-Type": "application/json",
       },
     });
+    const { status, data } = await response.json();
 
-    if (!response.ok || response.status !== "success") {
+    if (!response.ok || status !== "success") {
       throw new Error("Failed to fetch user");
     }
 
-    const result = await response.json();
-    return result.data;
+    return data;
   } catch (err) {
     console.error(err);
   }

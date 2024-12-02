@@ -1,24 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CardSection from "../components/dashBoardCards";
 import { fetchUser } from "../api/accounts";
 
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import PageTitle from "../components/PageTitle";
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
   const tempData = {
     user: "test1",
   };
 
   useEffect(() => {
-    fetchUser(tempData.user);
-  });
+    fetchUser(tempData.user)
+      .then((data) => {
+        setUser(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handlePayment = () => {
     console.log("Payment button clicked");
   };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -37,7 +62,10 @@ export default function Dashboard() {
       >
         {/* Card Section */}
         <div className="card-section" style={{ width: "40%" }}>
-          <CardSection title="User's Balance" content="$1000" />
+          <CardSection
+            title="User's Balance"
+            content={`$${user.account.balance}`}
+          />
           <CardSection
             title="Recent Activity"
             listItems={[
