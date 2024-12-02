@@ -2,7 +2,7 @@ const db = require('../utils/db');
 const accountsController = require('./accounts')
 
 async function getTransactionsByAccount(handler) {
-	return await db.query('SELECT * FROM `transactions` WHERE `from_handler` = ? OR `to_handler` = ?', [handler, handler]);
+	return await db.query('SELECT * FROM `transactions` WHERE `from_handler` = ? OR `to_handler` = ? ORDER BY `creation` DESC', [handler, handler]);
 }
 
 async function createTransaction(body) {
