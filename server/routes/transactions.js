@@ -56,7 +56,7 @@ router.post('/', transactionsValidator.createTransactionValidator,
 		}
 	});
 
-router.post('/deposit', transactionsValidator.createDepositValidator,
+router.post('/deposit', transactionsValidator.createDepositOrWithdrawValidator,
 	async function (req, res) {
 		try {
 			const validation = validationResult(req);
@@ -80,7 +80,7 @@ router.post('/deposit', transactionsValidator.createDepositValidator,
 		}
 	});
 
-router.post('/withdraw', transactionsValidator.createWithdrawValidator,
+router.post('/withdraw', transactionsValidator.createDepositOrWithdrawValidator,
 	async function (req, res) {
 		try {
 			const validation = validationResult(req);
