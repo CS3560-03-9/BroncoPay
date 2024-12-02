@@ -11,6 +11,8 @@ const indexRouter = require('./routes/index');
 const accountsRouter = require('./routes/accounts');
 const accountDetailsRouter = require('./routes/details');
 const transactionsRouter = require('./routes/transactions');
+const businessesRouter = require('./routes/businesses');
+const pledgesRouter = require('./routes/pledges');
 
 const app = express();
 
@@ -24,5 +26,7 @@ app.use('/', indexRouter);
 app.use('/accounts', accountsRouter);
 app.use('/details', accountDetailsRouter);
 app.use('/transactions', transactionsRouter);
+app.use('/businesses', businessesRouter);
+app.use('/pledges', pledgesRouter);
 
 module.exports = app;
