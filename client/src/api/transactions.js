@@ -13,10 +13,8 @@ export async function fetchActivity(user) {
       throw new Error("Failed to fetch user");
     }
 
-    console.log("Transactions", data);
-
     return data.transactions;
   } catch (err) {
-    console.error(err);
+    throw new Error();
   }
 }

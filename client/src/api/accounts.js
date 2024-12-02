@@ -16,6 +16,6 @@ export async function fetchUser(user) {
 
     return data.account;
   } catch (err) {
-    console.error(err);
+    throw new Error(err);
   }
 }
