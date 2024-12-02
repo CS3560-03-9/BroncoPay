@@ -6,6 +6,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import PageTitle from "../components/PageTitle";
+import AccountBalanceCard from "../components/AccountBalanceCard";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -62,10 +63,7 @@ export default function Dashboard() {
       >
         {/* Card Section */}
         <div className="card-section" style={{ width: "40%" }}>
-          <CardSection
-            title="User's Balance"
-            content={`$${user.account.balance}`}
-          />
+          <AccountBalanceCard balance={user.account.balance} sx={{ mt: 3 }} />
           <CardSection
             title="Recent Activity"
             listItems={[
