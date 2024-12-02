@@ -23,9 +23,10 @@ CREATE TABLE account_details (
 CREATE TABLE transactions (
     transaction_id INT NOT NULL AUTO_INCREMENT,
     from_handler VARCHAR(255) NOT NULL,
-    to_handler VARCHAR(255) NOT NULL,
+    to_handler VARCHAR(255),
     amount INT NOT NULL,
     transaction_desc VARCHAR(255),
+    transaction_type VARCHAR(255),
     creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (transaction_id),
     FOREIGN KEY (from_handler) REFERENCES accounts(handler),

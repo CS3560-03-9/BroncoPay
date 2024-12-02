@@ -19,11 +19,36 @@ async function createTransaction(body) {
 	}
 	await accountsController.changeBalance(body.fromHandler, -body.amount);
 	await accountsController.changeBalance(body.toHandler, body.amount);
-	return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`) VALUES (?, ?, ?, ?)',
-		[body.fromHandler, body.toHandler, body.amount, body.description]);
+	return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`, `transaction_type`) VALUES (?, ?, ?, ?, ?)',
+		[body.fromHandler, body.toHandler, body.amount, body.description, 'TRANSACTION']);
+}
+
+async function createDeposit(body) {
+	const account = await accountsController.getAccount(body.handler);
+	if (account.length === 0) {
+		throw new Error('account does not exist');
+	}
+	await accountsController.changeBalance(body.account, body.amount);
+	return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`, `transaction_type`) VALUES (?, ?, ?, ?, ?)',
+		[body.account, null, body.amount, body.description, 'DEPOSIT']);
+}
+
+async function createWithdraw(body) {
+	const account = await accountsController.getAccount(body.handler);
+	if (account.length === 0) {
+		throw new Error('account does not exist');
+	}
+	if (body.amount > account[0].balance) {
+		throw new Error('amount is greater than balance');
+	}
+	await accountsController.changeBalance(body.account, -body.amount);
+	return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`, `transaction_type`) VALUES (?, ?, ?, ?, ?)',
+		[body.account, null, body.amount, body.description, 'WITHDRAW']);
 }
 
 module.exports = {
 	getTransactionsByAccount,
 	createTransaction,
+	createDeposit,
+	createWithdraw,
 };
