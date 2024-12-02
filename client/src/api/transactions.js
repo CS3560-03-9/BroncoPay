@@ -1,9 +1,8 @@
 const BASE_URL = "http://localhost:3000"; // ** TODO: Update this in env or do some default url shenanigans later **
 
-export async function fetchUser(user) {
+export async function fetchActivity(user) {
   try {
-    const response = await fetch(`${BASE_URL}/accounts/${user}`, {
-      // ** TODO: Update URL to use a base url rather than hardcode (env?)
+    const response = await fetch(`${BASE_URL}/transactions/${user}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -14,7 +13,9 @@ export async function fetchUser(user) {
       throw new Error("Failed to fetch user");
     }
 
-    return data;
+    console.log("Transactions", data);
+
+    return data.transactions;
   } catch (err) {
     console.error(err);
   }
