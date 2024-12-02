@@ -6,7 +6,7 @@ async function getPledges(handler) {
 }
 
 async function getPledge(id) {
-	return await db.query('SELECT * FROM `pledges` WHERE `pledge_id` = ?', [id]);
+    return await db.query('SELECT * FROM `pledges` WHERE `pledge_id` = ?', [id]);
 }
 
 async function createPledge(body) {
@@ -20,6 +20,6 @@ async function createPledge(body) {
 
 module.exports = {
     getPledges,
-	getPledge,
+    getPledge,
     createPledge,
 }

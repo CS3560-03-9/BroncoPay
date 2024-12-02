@@ -17,7 +17,7 @@ router.get('/:handler', async function (req, res) {
         return;
     }
     try {
-        const subscriptions= await subscriptionsController.getSubscriptions(handler);
+        const subscriptions = await subscriptionsController.getSubscriptions(handler);
         res.status(200).json({
             status: 'success',
             data: {
