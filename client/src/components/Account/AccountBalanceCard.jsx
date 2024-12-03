@@ -6,7 +6,6 @@ export default function AccountBalanceCard({ balance, sx }) {
   return (
     <Card
       sx={{
-        width: 300,
         padding: 2,
         ...sx,
       }}
@@ -23,9 +22,7 @@ export default function AccountBalanceCard({ balance, sx }) {
             pb: 1,
           }}
         >
-          <Typography variant="h5" sx={{ pr: 1 }}>
-            Account Balance
-          </Typography>
+          <Typography variant="h5">Account Balance</Typography>
           <PaymentIcon />
         </Stack>
         <Stack direction="row" spacing={1}>

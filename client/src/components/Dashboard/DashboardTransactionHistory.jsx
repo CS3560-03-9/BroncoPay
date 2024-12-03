@@ -1,20 +1,22 @@
-/* eslint-disable react/prop-types */
+import React from "react";
+
 import {
+  List,
+  ListItem,
   Card,
   CardContent,
   Stack,
   Typography,
-  List,
-  ListItem,
+  Divider,
 } from "@mui/material";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import AccountAcitivityEntry from "./AccountActivityEntry";
+import AccountActivityEntry from "../Account/AccountActivityEntry";
+import HistoryIcon from "@mui/icons-material/History";
 
-export default function AccountRecentActivity({ listItems, sx }) {
+export default function DashboardTransactionHistory({ entries, sx }) {
   return (
     <Card
       sx={{
-        padding: 2,
+        padding: 4,
         ...sx,
       }}
       raised
@@ -27,17 +29,16 @@ export default function AccountRecentActivity({ listItems, sx }) {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
-            pb: 1,
           }}
         >
-          <Typography variant="h5" sx={{ pr: 1 }}>
-            Recent Activity
+          <Typography variant="h4" sx={{ pr: 1, fontWeight: "bold" }}>
+            Transactions
           </Typography>
-          <ReceiptIcon />
+          <HistoryIcon fontSize="large" />
         </Stack>
-        {listItems && (
+        {entries && (
           <List>
-            {listItems.map(
+            {entries.map(
               (item, index) => (
                 console.log(item),
                 (
@@ -50,7 +51,7 @@ export default function AccountRecentActivity({ listItems, sx }) {
                       borderColor: "grey.500",
                     }}
                   >
-                    <AccountAcitivityEntry entry={item} />
+                    <AccountActivityEntry entry={item} />
                   </ListItem>
                 )
               )
