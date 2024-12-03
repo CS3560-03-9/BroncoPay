@@ -44,6 +44,7 @@ export default function Payment() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading || error) {
