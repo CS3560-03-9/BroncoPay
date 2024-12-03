@@ -62,10 +62,10 @@ export default function Payment() {
       {/* Parent Grid */}
       <Grid2 container spacing={10} columns={15} sx={{ m: 5, display: "flex"}}>
         {/* Account Balance */}
-          <Grid2 item size={4}>
-            <AccountBalanceCard balance={user?.balance} sx={{ mt: 3 }} />
-            <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
-          </Grid2>
+        <Grid2 item size={4}>
+          <AccountBalanceCard balance={user?.balance} sx={{ mt: 3 }} />
+          <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
+        </Grid2>
 
         {/* Transactions Component */}
         <Grid2 item size ={8} sx={{marginLeft: "10%", marginRight: "10%"}}>

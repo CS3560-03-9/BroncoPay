@@ -118,14 +118,14 @@ const PaymentComponent = () => {
                 </Typography>
                 <TextField
                   id="outlined-basic"
-                  label="Card Number"
+                  label="0000 0000 0000 0000"
                   variant="outlined"
                   fullWidth
                   sx={{ mb: 2 }}
                 />
                 <TextField
                   id="outlined-basic"
-                  label="Expiry Date"
+                  label="Expiration Date"
                   variant="outlined"
                   fullWidth
                   sx={{ mb: 2 }}
