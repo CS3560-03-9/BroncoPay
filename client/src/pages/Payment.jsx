@@ -22,10 +22,8 @@ export default function Payment() {
   const [user, setUser] = useState({
     handler: "",
     email: "",
-    account_type: "",
     balance: 0,
     spending_limit: 0,
-    creation: "",
   });
   const [activity, setActivity] = useState([]);
 
@@ -37,7 +35,7 @@ export default function Payment() {
     const fetchData = async () => {
       try {
         const user = await fetchUser(tempData.user);
-        setUser(user);
+        setUser(user[0]);
 
         const transactions = await fetchActivity(tempData.user);
         setActivity(transactions);
