@@ -8,6 +8,7 @@ import { Box, CircularProgress, Grid2 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import PageTitle from "../components/PageTitle";
+import LoadingPage from "../components/LoadingPage";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 import DashboardTransactionHistory from "../components/Dashboard/DashboardTransactionHistory";
@@ -51,18 +52,7 @@ export default function Dashboard() {
   };
 
   if (loading || error) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
 
   return (
