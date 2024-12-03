@@ -22,17 +22,17 @@ function App() {
     },
     {
       segment: "",
-      title: "Dashboard",
+      title: "dashboard",
       icon: <DashboardIcon />,
       pattern: "/",
     },
     {
-      segment: "Payment",
+      segment: "payment",
       title: "Payments",
       icon: <PaymentIcon />,
     },
     {
-      segment: "Business",
+      segment: "business",
       title: "Business",
       icon: <BusinessCenterIcon />,
     },
@@ -40,12 +40,12 @@ function App() {
       kind: "divider",
     },
     {
-      segment: "Account",
+      segment: "account",
       title: "Account",
       icon: <ManageAccountsIcon />,
     },
     {
-      segment: "Logout",
+      segment: "login",
       title: "Logout",
       icon: <LogoutIcon />,
     },
