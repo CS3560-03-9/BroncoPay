@@ -2,10 +2,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { DashboardLayout } from "@toolpad/core";
+import SidebarFooter from "../components/Dashboard/SidebarFooter";
 
 export default function Layout() {
   return (
-    <DashboardLayout defaultSidebarCollapsed>
+    <DashboardLayout
+      defaultSidebarCollapsed
+      slots={{ sidebarFooter: SidebarFooter }}
+    >
       <Outlet />
     </DashboardLayout>
   );

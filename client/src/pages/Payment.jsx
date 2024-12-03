@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import PaymentButton from "../components/button";
 import { Card, CardContent, Typography, Box, CircularProgress, Grid2, TextField} from "@mui/material";
@@ -12,6 +13,7 @@ import PageTitle from "../components/PageTitle";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 import PaymentComponent from "../components/Transactions";
+import LoadingPage from "../components/LoadingPage";
 
 export default function Payment() {
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,8 @@ export default function Payment() {
   const [user, setUser] = useState({
     handler: "",
     email: "",
-    account_type: "",
     balance: 0,
     spending_limit: 0,
-    creation: "",
   });
   const [activity, setActivity] = useState([]);
   const [step, setStep] = useState(1);
@@ -35,7 +35,7 @@ export default function Payment() {
     const fetchData = async () => {
       try {
         const user = await fetchUser(tempData.user);
-        setUser(user);
+        setUser(user[0]);
 
         const transactions = await fetchActivity(tempData.user);
         setActivity(transactions);
@@ -48,21 +48,11 @@ export default function Payment() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading || error) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
 
   return (

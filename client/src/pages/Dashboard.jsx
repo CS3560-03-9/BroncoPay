@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import CardSection from "../components/dashBoardCards";
 import { fetchUser } from "../api/accounts";
@@ -7,6 +8,7 @@ import { Box, CircularProgress, Grid2 } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import PageTitle from "../components/PageTitle";
+import LoadingPage from "../components/LoadingPage";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 import DashboardTransactionHistory from "../components/Dashboard/DashboardTransactionHistory";
@@ -17,10 +19,8 @@ export default function Dashboard() {
   const [user, setUser] = useState({
     handler: "",
     email: "",
-    account_type: "",
     balance: 0,
     spending_limit: 0,
-    creation: "",
   });
   const [activity, setActivity] = useState([]);
 
@@ -32,7 +32,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const user = await fetchUser(tempData.user);
-        setUser(user);
+        setUser(user[0]);
 
         const transactions = await fetchActivity(tempData.user);
         setActivity(transactions);
@@ -45,6 +45,7 @@ export default function Dashboard() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePayment = () => {
@@ -52,18 +53,7 @@ export default function Dashboard() {
   };
 
   if (loading || error) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
 
   return (
