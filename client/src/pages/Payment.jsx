@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PaymentButton from "../components/button";
-import { Card, CardContent, Typography, Box, CircularProgress } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 
 import { fetchUser } from "../api/accounts";
@@ -83,16 +89,17 @@ export default function Payment() {
           flexWrap: "wrap",
         }}
       >
-
         {/* Balance & Recent Transactions */}
-        <div className="card-section" style={{ width: "30%", padding: "0", marginLeft: "5%", }}>
-        <AccountBalanceCard balance={user.balance} sx={{ mt: 3 }} />
-        <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
+        <div
+          className="card-section"
+          style={{ width: "30%", padding: "0", marginLeft: "5%" }}
+        >
+          <AccountBalanceCard balance={user.balance} sx={{ mt: 3 }} />
+          <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
         </div>
 
-
         {/* Make a Payment */}
-        <Card 
+        <Card
           sx={{
             width: "30%",
             padding: 0,
