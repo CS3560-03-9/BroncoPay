@@ -1,39 +1,103 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PaymentButton from "../components/button";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box, CircularProgress } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 
+import { fetchUser } from "../api/accounts";
+import { fetchActivity } from "../api/transactions";
+
 import PageTitle from "../components/PageTitle";
+import AccountBalanceCard from "../components/Account/AccountBalanceCard";
+import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 
 export default function Payment() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState({
+    handler: "",
+    email: "",
+    account_type: "",
+    balance: 0,
+    spending_limit: 0,
+    creation: "",
+  });
+  const [activity, setActivity] = useState([]);
+
+  const tempData = {
+    user: "test2",
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const user = await fetchUser(tempData.user);
+        setUser(user);
+
+        const transactions = await fetchActivity(tempData.user);
+        setActivity(transactions);
+
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError(err);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading || error) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   const handleDepositMoney = () => {
     console.log("Deposit Money button clicked");
-    // Add logic to handle deposit money
+    //TODO: handle deposit money
   };
 
   const handleSetUpRecurringPayments = () => {
     console.log("Set Up Recurring Payments button clicked");
-    // Add logic to handle recurring payments
+    //TODO: handle recurring payments
   };
 
   return (
     <Box>
       <PageTitle title="Payments" icon={<PaymentIcon fontSize="large" />} />
-
+      {/* Main div Styling */}
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "flex-start",
-          gap: "20px",
+          gap: "0px",
           flexWrap: "wrap",
         }}
       >
-        <Card
+
+        {/* Balance & Recent Transactions */}
+        <div className="card-section" style={{ width: "30%", padding: "0", marginLeft: "5%", }}>
+        <AccountBalanceCard balance={user.balance} sx={{ mt: 3 }} />
+        <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
+        </div>
+
+
+        {/* Make a Payment */}
+        <Card 
           sx={{
-            width: 600,
-            padding: 4,
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            width: "30%",
+            padding: 0,
+            marginTop: "2%",
+            boxShadow: "0 10px 10px rgba(0, 0, 0, 0.3)",
             textAlign: "center",
           }}
         >
@@ -41,12 +105,10 @@ export default function Payment() {
             <Typography variant="h5" component="h2" sx={{ marginBottom: 2 }}>
               Make a Payment
             </Typography>
-
-            {/* Deposit Card */}
             <Card
               sx={{
-                width: 400,
-                padding: 2,
+                width: "100%",
+                padding: 0,
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                 textAlign: "center",
                 marginBottom: 2,
@@ -85,7 +147,6 @@ export default function Payment() {
                   />
                 </div>
 
-                {/* Deposit Money Button */}
                 <PaymentButton
                   onClick={handleDepositMoney}
                   label="Deposit Money"
@@ -98,10 +159,11 @@ export default function Payment() {
         {/* Recurring Payments Card */}
         <Card
           sx={{
-            width: 600,
-            padding: 4,
+            width: "30%",
+            padding: 0,
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             textAlign: "center",
+            marginTop: "2%",
           }}
         >
           <CardContent>
@@ -109,10 +171,9 @@ export default function Payment() {
               Set Up Recurring Payments
             </Typography>
 
-            {/* Recurring Payments Card */}
             <Card
               sx={{
-                width: 400,
+                width: "100%",
                 padding: 2,
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                 textAlign: "center",
