@@ -1,12 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import PaymentButton from "../components/button";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  CircularProgress,
-} from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 
 import { fetchUser } from "../api/accounts";
@@ -15,6 +10,7 @@ import { fetchActivity } from "../api/transactions";
 import PageTitle from "../components/PageTitle";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import AccountRecentActivity from "../components/Account/AccountRecentActivity";
+import LoadingPage from "../components/LoadingPage";
 
 export default function Payment() {
   const [loading, setLoading] = useState(true);
@@ -48,21 +44,11 @@ export default function Payment() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading || error) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
   const handleDepositMoney = () => {
     console.log("Deposit Money button clicked");
