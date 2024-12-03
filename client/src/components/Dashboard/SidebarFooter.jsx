@@ -7,7 +7,7 @@ export default function SidebarFooter({ mini }) {
       variant="caption"
       sx={{ m: 1, whiteSpace: "nowrap", overflow: "hidden" }}
     >
-      {mini ? "© BP" : `© 2024 BroncoPay`}
+      {mini ? "© BP" : `© 2024 Created by BroncoPay`}
     </Typography>
   );
 }

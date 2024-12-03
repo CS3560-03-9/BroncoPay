@@ -9,6 +9,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PaymentIcon from "@mui/icons-material/Payment";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
 import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
@@ -21,25 +22,30 @@ function App() {
     },
     {
       segment: "",
-      title: "Dashboard",
+      title: "dashboard",
       icon: <DashboardIcon />,
       pattern: "/",
     },
     {
-      segment: "Payment",
+      segment: "payment",
       title: "Payments",
       icon: <PaymentIcon />,
+    },
+    {
+      segment: "business",
+      title: "Business",
+      icon: <BusinessCenterIcon />,
     },
     {
       kind: "divider",
     },
     {
-      segment: "Account",
+      segment: "account",
       title: "Account",
       icon: <ManageAccountsIcon />,
     },
     {
-      segment: "Logout",
+      segment: "login",
       title: "Logout",
       icon: <LogoutIcon />,
     },

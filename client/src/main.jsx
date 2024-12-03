@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Payment from "./pages/Payment.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import Account from "./pages/Account.jsx";
+import Business from "./pages/Business.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
           {
             path: "/payment",
             Component: Payment,
+          },
+          {
+            path: "/account",
+            Component: Account,
+          },
+          {
+            path: "/business",
+            Component: Business,
           },
         ],
       },
