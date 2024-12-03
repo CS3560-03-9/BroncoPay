@@ -2,13 +2,18 @@
 import React from "react";
 
 import { Box, Grid2, Stack } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+
+import { useNavigate } from "react-router-dom";
 
 import PageTitle from "../components/PageTitle";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
-import { DataGrid } from "@mui/x-data-grid";
-import BusinessCreatePledge from "../components/Business/BusinessCreatePledge";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
+import BusinessActionButton from "../components/Business/BusinessActionButton";
+
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 
 export default function Business() {
   const PLEDGES_COLUMNS = [
@@ -56,6 +61,9 @@ export default function Business() {
       description: "Description 5",
     },
   ];
+
+  const navigate = useNavigate();
+
   return (
     <Box>
       <PageTitle title="Business" icon={<BusinessCenterIcon />} />
@@ -68,12 +76,30 @@ export default function Business() {
             <Grid2 container spacing={2}>
               {/* Create new pledge */}
               <Grid2 item size={6}>
-                <BusinessCreatePledge />
+                <BusinessActionButton
+                  text={"New Pledge"}
+                  icon={<CurrencyExchangeIcon sx={{ fontSize: 40 }} />}
+                />
               </Grid2>
 
-              {/* Something else TO DO */}
+              {/* Withdraw from business balance */}
               <Grid2 item size={6}>
-                <BusinessCreatePledge />
+                <BusinessActionButton
+                  text={"Withdraw"}
+                  icon={<LocalAtmIcon sx={{ fontSize: 40 }} />}
+                  onClick={() => navigate("/business/withdraw")}
+                />
+              </Grid2>
+            </Grid2>
+            <Grid2 container spacing={2}>
+              {/* Create new pledge */}
+              <Grid2 item size={6}>
+                <BusinessActionButton text={"filler"} icon={"?"} />
+              </Grid2>
+
+              {/* Withdraw from business balance */}
+              <Grid2 item size={6}>
+                <BusinessActionButton text={"filler"} icon={"?"} />
               </Grid2>
             </Grid2>
           </Stack>
