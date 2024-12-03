@@ -6,9 +6,9 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SettingsIcon from "@mui/icons-material/Settings";
-import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import PaymentIcon from "@mui/icons-material/Payment";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
@@ -31,9 +31,17 @@ function App() {
       icon: <PaymentIcon />,
     },
     {
-      segment: "login",
-      title: "Login",
-      icon: <LoginIcon />,
+      kind: "divider",
+    },
+    {
+      segment: "Account",
+      title: "Account",
+      icon: <ManageAccountsIcon />,
+    },
+    {
+      segment: "Logout",
+      title: "Logout",
+      icon: <LogoutIcon />,
     },
   ];
 
