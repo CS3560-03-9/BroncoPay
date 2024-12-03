@@ -9,6 +9,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PaymentIcon from "@mui/icons-material/Payment";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
 import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
@@ -29,6 +30,11 @@ function App() {
       segment: "Payment",
       title: "Payments",
       icon: <PaymentIcon />,
+    },
+    {
+      segment: "Business",
+      title: "Business",
+      icon: <BusinessCenterIcon />,
     },
     {
       kind: "divider",

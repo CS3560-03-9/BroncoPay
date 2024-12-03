@@ -3,10 +3,13 @@ import React from "react";
 
 import { Typography, Box } from "@mui/material";
 
+import PageTitle from "../components/PageTitle";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
 export default function Account() {
   return (
     <Box>
-      <Typography variant="h1">Account</Typography>
+      <PageTitle title="Account" icon={<ManageAccountsIcon />} />
     </Box>
   );
 }
