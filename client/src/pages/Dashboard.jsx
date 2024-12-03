@@ -32,7 +32,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const user = await fetchUser(tempData.user);
-        setUser(user[0]);
+        setUser(user[0] || {});
 
         const transactions = await fetchActivity(tempData.user);
         setActivity(transactions);
@@ -65,7 +65,7 @@ export default function Dashboard() {
       <Grid2 container spacing={3} columns={20} sx={{ m: 5 }}>
         {/* Account balance */}
         <Grid2 item size={4}>
-          <AccountBalanceCard balance={user.balance} sx={{}} />
+          <AccountBalanceCard balance={user?.balance || 0} sx={{}} />
         </Grid2>
 
         {/* Transaction history table */}
