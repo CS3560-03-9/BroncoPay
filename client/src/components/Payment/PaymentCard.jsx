@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 
@@ -12,12 +13,18 @@ import {
   Divider,
 } from "@mui/material";
 
-import InputIcon from "@mui/icons-material/Input";
 import PaymentConfirmationForm from "./PaymentConfirmationForm";
 
 import { depositMoney } from "../../api/transactions";
 
-export default function PaymentCard() {
+// Transaction Types: DEPOSIT, WITHDRAW, TRANSACTION
+// Make icon fontSize: 35
+export default function PaymentCard({
+  title,
+  icon,
+  handleConfirm,
+  transaction_type,
+}) {
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState(0);
 
@@ -39,15 +46,6 @@ export default function PaymentCard() {
     setStep((prevStep) => prevStep - 1);
   };
 
-  const handleDepositMoney = (handler) => {
-    try {
-      depositMoney(handler);
-      handleNext();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <Card sx={{ mx: -8 }} raised>
       <Box sx={{ p: 4 }}>
@@ -56,14 +54,14 @@ export default function PaymentCard() {
           spacing={2}
           sx={{ my: 3, alignItems: "center", justifyContent: "center" }}
         >
-          <InputIcon sx={{ fontSize: 35 }} />
+          {icon}
           <Typography
             variant="h4"
             component="h2"
             textAlign="center"
             sx={{ mb: 2, fontWeight: "bold" }}
           >
-            Make a Deposit
+            {title}
           </Typography>
         </Stack>
         <Divider variant="middle" sx={{ mb: 2 }} />
@@ -117,8 +115,9 @@ export default function PaymentCard() {
           )}
 
           {/* THIRD STEP */}
+          {/* Transaction Types: DEPOSIT, WITHDRAW, TRANSACTION */}
           {step === 3 && (
-            <PaymentConfirmationForm type="DEPOSIT" balance={amount} />
+            <PaymentConfirmationForm type={transaction_type} balance={amount} />
           )}
 
           <Stack
@@ -140,8 +139,14 @@ export default function PaymentCard() {
 
             {/* Page 2: Payment Information */}
             {step === 2 && (
-              <Button variant="outlined" onClick={handleDepositMoney}>
-                Deposit Money
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  handleConfirm;
+                  handleNext();
+                }}
+              >
+                Confirm
               </Button>
             )}
           </Stack>

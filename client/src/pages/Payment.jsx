@@ -1,21 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import PaymentButton from "../components/button";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  CircularProgress,
-  Grid2,
-  TextField,
-} from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 import InputIcon from "@mui/icons-material/Input";
-import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 
 import { fetchUser } from "../api/accounts";
-import { fetchActivity } from "../api/transactions";
+import { fetchActivity, depositMoney } from "../api/transactions";
 
 import PageTitle from "../components/PageTitle";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
@@ -37,6 +27,14 @@ export default function Payment() {
 
   const tempData = {
     user: "test2",
+  };
+
+  const handleDepositMoney = (handler) => {
+    try {
+      depositMoney(handler);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -77,7 +75,12 @@ export default function Payment() {
 
         {/* Transactions Component */}
         <Grid2 size={8} sx={{ marginLeft: "10%", marginRight: "10%" }}>
-          <PaymentCard />
+          <PaymentCard
+            title="Make a Deposit"
+            icon={<InputIcon sx={{ fontSize: 35 }} />}
+            handleConfirm={handleDepositMoney(user.handler)}
+            transaction_type="DEPOSIT"
+          />
         </Grid2>
       </Grid2>
     </Box>
