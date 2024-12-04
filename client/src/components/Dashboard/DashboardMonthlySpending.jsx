@@ -22,13 +22,17 @@ export default function DashboardMonthlySpending({ balance, sx }) {
             pb: 1,
           }}
         >
-          <Typography variant="subtitle" inline>
+          <Typography variant="subtitle" inline="true">
             In
           </Typography>
-          <Typography variant="subtitle" sx={{ fontWeight: "bold" }} inline>
+          <Typography
+            variant="subtitle"
+            sx={{ fontWeight: "bold" }}
+            inline="true"
+          >
             {new Date().toLocaleString("default", { month: "long" })},
           </Typography>
-          <Typography variant="subtitle" sx={{ mr: 2 }} inline>
+          <Typography variant="subtitle" sx={{ mr: 2 }} inline="true">
             {"you've spent"}
           </Typography>
         </Stack>

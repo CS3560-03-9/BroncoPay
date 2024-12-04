@@ -29,10 +29,16 @@ export default function DashboardSpendingLimit({ balance, limit, sx }) {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
+            justifyContent: "center",
             pb: 2,
           }}
         >
-          <Typography variant="h6">Spending Limit</Typography>
+          <Typography
+            variant="h6"
+            sx={{ textAlign: "center", fontWeight: 400 }}
+          >
+            Spending Limit
+          </Typography>
           <PriceCheckIcon />
         </Stack>
         <Box sx={{ pb: 4 }}>

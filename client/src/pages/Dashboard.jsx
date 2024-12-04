@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchUser } from "../api/accounts";
 import { fetchActivity } from "../api/transactions";
+import { fetchSubscriptions } from "../api/subscriptions";
 
 import { Box, Grid2, Stack } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -12,6 +13,7 @@ import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import DashboardTransactionHistory from "../components/Dashboard/DashboardTransactionHistory";
 import DashboardMonthlySpending from "../components/Dashboard/DashboardMonthlySpending";
 import DashboardSpendingLimit from "../components/Dashboard/DashboardSpendingLimit";
+import DashboardMonthlyBill from "../components/Dashboard/DashboardMonthlyBill";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,7 @@ export default function Dashboard() {
     spending_limit: 0,
   });
   const [activity, setActivity] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
 
   const tempData = {
     user: "test3",
@@ -37,6 +40,9 @@ export default function Dashboard() {
 
         const transactions = await fetchActivity(tempData.user);
         setActivity(transactions);
+
+        const subscriptions = await fetchSubscriptions(tempData.user);
+        setSubscriptions(subscriptions);
 
         setLoading(false);
       } catch (err) {
@@ -61,7 +67,7 @@ export default function Dashboard() {
       />
       <Grid2 container spacing={3} columns={20} sx={{ m: 5 }}>
         {/* Account balance */}
-        <Grid2 item size={4}>
+        <Grid2 size={4}>
           <Stack spacing={3}>
             <AccountBalanceCard balance={user?.balance || 0} />
             <DashboardMonthlySpending balance={tempData.monthly_spending} />
@@ -69,11 +75,12 @@ export default function Dashboard() {
               balance={tempData.monthly_spending}
               limit={user?.spending_limit || 0}
             />
+            {/* <DashboardMonthlyBill transactions={subscriptions} /> */}
           </Stack>
         </Grid2>
 
         {/* Transaction history table */}
-        <Grid2 item size={16}>
+        <Grid2 size={16}>
           <DashboardTransactionHistory
             entries={activity}
             user={tempData.user}
