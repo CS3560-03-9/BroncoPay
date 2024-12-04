@@ -5,7 +5,7 @@ const router = express.Router();
 const pledgeController = require('../controllers/pledges');
 const pledgeValidator = require('../validators/pledges');
 
-router.get('/:handler', async function (req, res) {
+router.get('/handler/:handler', async function (req, res) {
     const {handler} = req.params;
     if (handler === undefined) {
         res.status(400).json({
@@ -17,11 +17,38 @@ router.get('/:handler', async function (req, res) {
         return;
     }
     try {
-        const pledges = await pledgeController.getPledges(handler)
+        const pledges = await pledgeController.getPledges(handler);
         res.status(200).json({
             status: 'success',
             data: {
                 pledges: pledges,
+            },
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: 'error',
+            message: err.message,
+        });
+    }
+});
+
+router.get('/id/:id', async function (req, res) {
+    const {id} = req.params;
+    if (id === undefined) {
+        res.status(400).json({
+            status: 'fail',
+            data: {
+                id: 'id is missing',
+            },
+        });
+        return;
+    }
+    try {
+        const pledge = await pledgeController.getPledge(id);
+        res.status(200).json({
+            status: 'success',
+            data: {
+                pledge: pledge[0],
             },
         });
     } catch (err) {
