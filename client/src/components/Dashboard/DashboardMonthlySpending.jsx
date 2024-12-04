@@ -29,7 +29,7 @@ export default function DashboardMonthlySpending({ balance, sx }) {
             {new Date().toLocaleString("default", { month: "long" })},
           </Typography>
           <Typography variant="subtitle" sx={{ mr: 2 }} inline>
-            you've spent
+            {"you've spent"}
           </Typography>
         </Stack>
         <Stack direction="row" spacing={1}>
