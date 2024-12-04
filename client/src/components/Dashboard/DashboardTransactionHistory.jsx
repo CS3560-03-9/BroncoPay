@@ -1,14 +1,5 @@
-import React from "react";
-
-import {
-  List,
-  ListItem,
-  Card,
-  CardContent,
-  Stack,
-  Typography,
-  Divider,
-} from "@mui/material";
+/* eslint-disable react/prop-types */
+import { Card, CardContent, Stack, Typography, Divider } from "@mui/material";
 import AccountActivityEntry from "../Account/AccountActivityEntry";
 import HistoryIcon from "@mui/icons-material/History";
 
@@ -37,26 +28,14 @@ export default function DashboardTransactionHistory({ entries, sx }) {
           <HistoryIcon fontSize="large" />
         </Stack>
         {entries && (
-          <List>
-            {entries.map(
-              (item, index) => (
-                console.log(item),
-                (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      padding: 0,
-                      py: 3,
-                      borderBottom: 1,
-                      borderColor: "grey.500",
-                    }}
-                  >
-                    <AccountActivityEntry entry={item} />
-                  </ListItem>
-                )
-              )
-            )}
-          </List>
+          <Stack
+            spacing={2}
+            divider={<Divider sx={{ borderBottomWidth: 2 }} />}
+          >
+            {entries.map((item, index) => (
+              <AccountActivityEntry key={index} entry={item} />
+            ))}
+          </Stack>
         )}
       </CardContent>
     </Card>
