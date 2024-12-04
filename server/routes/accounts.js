@@ -3,6 +3,7 @@ const router = express.Router();
 
 const accountController = require('../controllers/accounts');
 
+// 
 router.get('/', async function (req, res) {
     try {
         const accounts = await accountController.getAccounts();

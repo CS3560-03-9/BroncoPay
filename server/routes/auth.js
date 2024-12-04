@@ -6,18 +6,31 @@ const authController = require("../controllers/auth");
 router.post("/signup", async (req, res) => {
   const { handler, password, email, spendingLimit } = req.body;
   if (!handler || !password || !email) {
-    return res
-      .status(400)
-      .json({ status: "fail", message: "Handler, Password, and Email are required" });
+    return res.status(400).json({ 
+      status: "fail", 
+      message: "Handler, Password, and Email are required" 
+    });
   }
 
   try {
-    await authController.signup(handler, password, email, spendingLimit);
-    res
-      .status(201)
-      .json({ status: "success", message: "Account created successfully" });
+    const result = await authController.signup(handler, password, email, spendingLimit);
+    console.log("PROBLEM: " + result);
+    res.status(201).json({ 
+      status: "success", 
+      message: "Account created successfully" 
+    });
   } catch (err) {
-    res.status(500).json({ status: "error", message: err.message });
+    if (err.code === 'ER_DUP_ENTRY') {
+      res.status(409).json({
+        status:'fail',
+        error: 'Duplicate entry. Email or Handler already exists'
+      });
+    } else {
+      res.status(500).json({ 
+        status: "error", 
+        message: err.message 
+      });
+    }
   }
 });
 
