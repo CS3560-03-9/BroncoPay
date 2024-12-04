@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [activity, setActivity] = useState([]);
 
   const tempData = {
-    user: "test2",
+    user: "test3",
   };
 
   useEffect(() => {
