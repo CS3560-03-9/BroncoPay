@@ -87,7 +87,11 @@ export default function Payment() {
         {/* Account Balance */}
         <Grid2 size={4}>
           <AccountBalanceCard balance={user?.balance} />
-          <AccountRecentActivity sx={{ mt: 3 }} listItems={activity} />
+          <AccountRecentActivity
+            sx={{ mt: 3 }}
+            listItems={activity}
+            user={tempData.user}
+          />
         </Grid2>
 
         {/* Transactions Component */}

@@ -3,7 +3,7 @@ import { Card, CardContent, Stack, Typography, Divider } from "@mui/material";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import AccountAcitivityEntry from "./AccountActivityEntry";
 
-export default function AccountRecentActivity({ listItems, sx }) {
+export default function AccountRecentActivity({ listItems, sx, user }) {
   return (
     <Card
       sx={{
@@ -34,7 +34,7 @@ export default function AccountRecentActivity({ listItems, sx }) {
             divider={<Divider sx={{ borderBottomWidth: 2 }} />}
           >
             {listItems.map((item, index) => (
-              <AccountAcitivityEntry key={index} entry={item} />
+              <AccountAcitivityEntry key={index} entry={item} user={user} />
             ))}
           </Stack>
         )}

@@ -3,7 +3,7 @@ import { Card, CardContent, Stack, Typography, Divider } from "@mui/material";
 import AccountActivityEntry from "../Account/AccountActivityEntry";
 import HistoryIcon from "@mui/icons-material/History";
 
-export default function DashboardTransactionHistory({ entries, sx }) {
+export default function DashboardTransactionHistory({ entries, sx, user }) {
   return (
     <Card
       sx={{
@@ -34,7 +34,7 @@ export default function DashboardTransactionHistory({ entries, sx }) {
             divider={<Divider sx={{ borderBottomWidth: 2 }} />}
           >
             {entries.map((item, index) => (
-              <AccountActivityEntry key={index} entry={item} />
+              <AccountActivityEntry key={index} entry={item} user={user} />
             ))}
           </Stack>
         )}

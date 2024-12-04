@@ -66,7 +66,10 @@ export default function Dashboard() {
 
         {/* Transaction history table */}
         <Grid2 item size={16}>
-          <DashboardTransactionHistory entries={activity} sx={{}} />
+          <DashboardTransactionHistory
+            entries={activity}
+            user={tempData.user}
+          />
         </Grid2>
       </Grid2>
     </Box>
