@@ -3,9 +3,14 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid2 } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 import InputIcon from "@mui/icons-material/Input";
+import PeopleIcon from "@mui/icons-material/People";
 
 import { fetchUser } from "../api/accounts";
-import { fetchActivity, depositMoney } from "../api/transactions";
+import {
+  fetchActivity,
+  depositMoney,
+  transferMoney,
+} from "../api/transactions";
 
 import PageTitle from "../components/PageTitle";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
@@ -38,6 +43,17 @@ export default function Payment() {
     }
   };
 
+  const handleTransferMoney = (data) => {
+    const { amount, recipient, description } = data;
+    try {
+      transferMoney(tempData.user, recipient, amount, description);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const ACTIVITY_MAX = 5; // number of recent transactions to display
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,7 +61,7 @@ export default function Payment() {
         setUser(user[0]);
 
         const transactions = await fetchActivity(tempData.user);
-        setActivity(transactions);
+        setActivity(transactions.slice(0, ACTIVITY_MAX));
 
         setLoading(false);
       } catch (err) {
@@ -83,6 +99,15 @@ export default function Payment() {
               handleDepositMoney(data);
             }}
             transaction_type="DEPOSIT"
+          />
+          <PaymentCard
+            title="Send money to another user"
+            icon={<PeopleIcon sx={{ fontSize: 35 }} />}
+            handleConfirm={(data) => {
+              handleTransferMoney(data);
+            }}
+            transaction_type="TRANSACTION"
+            sx={{ mt: 5 }}
           />
         </Grid2>
       </Grid2>

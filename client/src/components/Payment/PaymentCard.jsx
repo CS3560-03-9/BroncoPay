@@ -25,6 +25,7 @@ export default function PaymentCard({
   icon,
   handleConfirm,
   transaction_type,
+  sx,
 }) {
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState(0);
@@ -61,7 +62,7 @@ export default function PaymentCard({
   };
 
   return (
-    <Card raised>
+    <Card sx={{ ...sx }} raised>
       <Box sx={{ p: 4 }}>
         <Stack
           direction="row"

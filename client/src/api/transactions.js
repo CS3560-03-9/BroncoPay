@@ -69,3 +69,30 @@ export async function withdrawMoney(handler, amount, description) {
     throw new Error(err);
   }
 }
+
+export async function transferMoney(handler, recipient, amount, description) {
+  try {
+    const response = await fetch(`${BASE_URL}/transactions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fromHandler: handler,
+        toHandler: recipient,
+        amount: amount,
+        description: description,
+      }),
+    });
+
+    const { status } = await response.json();
+
+    if (!response.ok || status !== "success") {
+      throw new Error("Failed to transfer money");
+    }
+
+    return true;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
