@@ -61,7 +61,7 @@ export default function PaymentCard({
   };
 
   return (
-    <Card sx={{ mx: -8 }} raised>
+    <Card raised>
       <Box sx={{ p: 4 }}>
         <Stack
           direction="row"
