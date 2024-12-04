@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import CardSection from "../components/dashBoardCards";
 import { fetchUser } from "../api/accounts";
 import { fetchActivity } from "../api/transactions";
 
-import { Box, CircularProgress, Grid2 } from "@mui/material";
+import { Box, Grid2, Stack } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import PageTitle from "../components/PageTitle";
 import LoadingPage from "../components/LoadingPage";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
-import AccountRecentActivity from "../components/Account/AccountRecentActivity";
 import DashboardTransactionHistory from "../components/Dashboard/DashboardTransactionHistory";
+import DashboardMonthlySpending from "../components/Dashboard/DashboardMonthlySpending";
+import DashboardSpendingLimit from "../components/Dashboard/DashboardSpendingLimit";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,7 @@ export default function Dashboard() {
 
   const tempData = {
     user: "test3",
+    monthly_spending: 100,
   };
 
   useEffect(() => {
@@ -61,7 +62,14 @@ export default function Dashboard() {
       <Grid2 container spacing={3} columns={20} sx={{ m: 5 }}>
         {/* Account balance */}
         <Grid2 item size={4}>
-          <AccountBalanceCard balance={user?.balance || 0} sx={{}} />
+          <Stack spacing={3}>
+            <AccountBalanceCard balance={user?.balance || 0} />
+            <DashboardMonthlySpending balance={tempData.monthly_spending} />
+            <DashboardSpendingLimit
+              balance={tempData.monthly_spending}
+              limit={user?.spending_limit || 0}
+            />
+          </Stack>
         </Grid2>
 
         {/* Transaction history table */}
