@@ -18,3 +18,7 @@ export async function fetchActivity(user) {
     throw new Error();
   }
 }
+
+export async function depositMoney() {
+  // Do something here later **TO DO**
+}

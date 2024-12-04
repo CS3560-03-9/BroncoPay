@@ -20,8 +20,9 @@ import { fetchActivity } from "../api/transactions";
 import PageTitle from "../components/PageTitle";
 import AccountBalanceCard from "../components/Account/AccountBalanceCard";
 import AccountRecentActivity from "../components/Account/AccountRecentActivity";
-import PaymentComponent from "../components/Transactions";
 import LoadingPage from "../components/LoadingPage";
+
+import PaymentCard from "../components/Payment/PaymentCard";
 
 export default function Payment() {
   const [loading, setLoading] = useState(true);
@@ -33,7 +34,6 @@ export default function Payment() {
     spending_limit: 0,
   });
   const [activity, setActivity] = useState([]);
-  const [step, setStep] = useState(1);
 
   const tempData = {
     user: "test2",
@@ -77,7 +77,7 @@ export default function Payment() {
 
         {/* Transactions Component */}
         <Grid2 item size={8} sx={{ marginLeft: "10%", marginRight: "10%" }}>
-          <PaymentComponent />
+          <PaymentCard />
         </Grid2>
       </Grid2>
     </Box>
