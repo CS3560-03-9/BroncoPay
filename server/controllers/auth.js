@@ -5,6 +5,15 @@ dotenv.config();
 const db = require("../utils/db");
 
 async function signup(handler, password, email, spendingLimit = 0) {
+
+  const existingAccount = await db.query(
+    "SELECT * FROM `accounts` WHERE `email` = ? OR `handler` = ?",
+    [email, handler]
+  );
+  if (existingAccount.length > 0) {
+    throw new Error("Email or handler already exists");
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
   return await db.query(
     "INSERT INTO `accounts` (`handler`, `password`, `email`,`spending_limit`, `balance`) VALUES (?, ?, ?, ?, ?)",
