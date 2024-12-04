@@ -11,6 +11,7 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Account from "./pages/Account.jsx";
 import Business from "./pages/Business.jsx";
+import Subscriptions from "./pages/Subscriptions.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
           {
             path: "/account",
             Component: Account,
+          },
+          {
+            path: "/subscriptions",
+            Component: Subscriptions,
           },
           {
             path: "/business",

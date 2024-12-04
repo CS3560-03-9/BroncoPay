@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PaymentIcon from "@mui/icons-material/Payment";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import SellIcon from "@mui/icons-material/Sell";
 
 import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
@@ -30,6 +31,11 @@ function App() {
       segment: "payment",
       title: "Payments",
       icon: <PaymentIcon />,
+    },
+    {
+      segment: "subscriptions",
+      title: "Subscriptions",
+      icon: <SellIcon />,
     },
     {
       segment: "business",
