@@ -1,21 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import PaymentButton from "../components/button";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  CircularProgress,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Card, CardContent, Typography, Box, TextField } from "@mui/material";
 import InputIcon from "@mui/icons-material/Input";
 import { fetchUser } from "../api/accounts";
 import { fetchActivity } from "../api/transactions";
 
-import PageTitle from "../components/PageTitle";
-import AccountBalanceCard from "../components/Account/AccountBalanceCard";
-import AccountRecentActivity from "../components/Account/AccountRecentActivity";
+import PaymentInfoCard from "./Payment/PaymentInfoCard";
+import LoadingPage from "./LoadingPage";
 
 const PaymentComponent = () => {
   const [loading, setLoading] = useState(true);
@@ -52,27 +44,17 @@ const PaymentComponent = () => {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading || error) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <LoadingPage />;
   }
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
   const handleDepositMoney = () => {
-    console.log("Deposit Money")
+    console.log("Deposit Money");
     //TODO: handle successful deposit
   };
 
@@ -112,32 +94,7 @@ const PaymentComponent = () => {
 
             {/* SECOND STEP */}
             {step === 2 && (
-              <CardContent>
-                <Typography variant="h5" textAlign="left">
-                  Payment Information
-                </Typography>
-                <TextField
-                  id="outlined-basic"
-                  label="0000 0000 0000 0000"
-                  variant="outlined"
-                  fullWidth
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="Expiration Date"
-                  variant="outlined"
-                  fullWidth
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  id="outlined-basic"
-                  label="CVV"
-                  variant="outlined"
-                  fullWidth
-                  sx={{ mb: 2 }}
-                />
-              </CardContent>
+              <PaymentInfoCard onBack={handleBack} onNext={handleNext} />
             )}
 
             {/* Buttons */}
