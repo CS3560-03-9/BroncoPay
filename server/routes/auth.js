@@ -13,8 +13,7 @@ router.post("/signup", async (req, res) => {
   }
 
   try {
-    const result = await authController.signup(handler, password, email, spendingLimit);
-    console.log("PROBLEM: " + result);
+    await authController.signup(handler, password, email, spendingLimit);
     res.status(201).json({ 
       status: "success", 
       message: "Account created successfully" 
