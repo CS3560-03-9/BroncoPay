@@ -14,6 +14,7 @@ export default function AccountActivityEntry({ entry }) {
       <Typography variant="body2">
         Date: {new Date(entry.creation).toLocaleString()}
       </Typography>
+      <Typography variant="body2">Type: {entry.transaction_type}</Typography>
     </Box>
   );
 }
