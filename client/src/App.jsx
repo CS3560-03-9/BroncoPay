@@ -7,7 +7,7 @@ import "@fontsource/roboto/700.css";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LoginIcon from "@mui/icons-material/Login";
 import PaymentIcon from "@mui/icons-material/Payment";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -24,7 +24,7 @@ function App() {
     },
     {
       segment: "",
-      title: "dashboard",
+      title: "Dashboard",
       icon: <DashboardIcon />,
       pattern: "/",
     },
