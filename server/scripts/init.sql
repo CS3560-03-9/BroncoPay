@@ -72,3 +72,24 @@ INSERT INTO transactions (from_handler, to_handler, amount, transaction_desc) VA
 ('test1', 'test2', 1, 'mone3'),
 ('test4', 'test5', 235, 'mone4y'),
 ('test1', 'test2', 78, 'mon6ey');
+
+INSERT INTO businesses (handler) VALUES
+('test3'),
+('test4');
+
+INSERT INTO pledges (handler, cost, pledge_interval, pledge_desc) VALUES
+('test3', 100, 30, 'pledge1'),
+('test3', 200, 30, 'pledge2'),
+('test3', 300, 30, 'pledge3'),
+('test4', 400, 30, 'pledge1'),
+('test4', 500, 30, 'pledge2');
+
+INSERT INTO subscriptions (handler, pledge_id) VALUES
+('test1', 1),
+('test1', 2),
+('test1', 3),
+('test2', 1),
+('test2', 4),
+('test2', 5),
+('test5', 1),
+('test5', 5);
