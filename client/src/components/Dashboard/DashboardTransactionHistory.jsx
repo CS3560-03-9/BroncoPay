@@ -20,6 +20,7 @@ export default function DashboardTransactionHistory({ entries, sx }) {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
+            pb: 2,
           }}
         >
           <Typography variant="h4" sx={{ pr: 1, fontWeight: "bold" }}>

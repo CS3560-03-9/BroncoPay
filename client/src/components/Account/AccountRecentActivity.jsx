@@ -20,7 +20,7 @@ export default function AccountRecentActivity({ listItems, sx }) {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
-            pb: 1,
+            pb: 2,
           }}
         >
           <Typography variant="h5" sx={{ pr: 1 }}>
