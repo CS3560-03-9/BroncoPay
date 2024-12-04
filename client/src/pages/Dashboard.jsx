@@ -48,10 +48,6 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handlePayment = () => {
-    console.log("Payment button clicked");
-  };
-
   if (loading || error) {
     return <LoadingPage />;
   }

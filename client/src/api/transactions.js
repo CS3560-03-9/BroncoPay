@@ -15,6 +15,10 @@ export async function fetchActivity(user) {
 
     return data.transactions;
   } catch (err) {
-    throw new Error();
+    throw new Error(err);
   }
+}
+
+export async function depositMoney() {
+  // Do something here later **TO DO**
 }

@@ -37,24 +37,19 @@ export default function AccountRecentActivity({ listItems, sx }) {
         </Stack>
         {listItems && (
           <List>
-            {listItems.map(
-              (item, index) => (
-                console.log(item),
-                (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      padding: 0,
-                      py: 3,
-                      borderBottom: 1,
-                      borderColor: "grey.500",
-                    }}
-                  >
-                    <AccountAcitivityEntry entry={item} />
-                  </ListItem>
-                )
-              )
-            )}
+            {listItems.map((item, index) => (
+              <ListItem
+                key={index}
+                sx={{
+                  padding: 0,
+                  py: 3,
+                  borderBottom: 1,
+                  borderColor: "grey.500",
+                }}
+              >
+                <AccountAcitivityEntry entry={item} />
+              </ListItem>
+            ))}
           </List>
         )}
       </CardContent>
