@@ -28,7 +28,7 @@ async function createDeposit(body) {
     if (account.length === 0) {
         throw new Error('account does not exist');
     }
-    await accountsController.changeBalance(body.account, body.amount);
+    await accountsController.changeBalance(body.handler, body.amount);
     return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`, `transaction_type`) VALUES (?, ?, ?, ?, ?)',
         [body.account, null, body.amount, body.description, 'DEPOSIT']);
 }
@@ -41,7 +41,7 @@ async function createWithdraw(body) {
     if (body.amount > account[0].balance) {
         throw new Error('amount is greater than balance');
     }
-    await accountsController.changeBalance(body.account, -body.amount);
+    await accountsController.changeBalance(body.handler, -body.amount);
     return await db.query('INSERT INTO `transactions` (`from_handler`, `to_handler`, `amount`, `transaction_desc`, `transaction_type`) VALUES (?, ?, ?, ?, ?)',
         [body.account, null, body.amount, body.description, 'WITHDRAW']);
 }
