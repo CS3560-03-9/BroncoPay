@@ -15,7 +15,7 @@ export async function fetchActivity(user) {
 
     return data.transactions;
   } catch (err) {
-    throw new Error();
+    throw new Error(err);
   }
 }
 

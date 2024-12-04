@@ -11,29 +11,46 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
-import { usePaymentInputs } from "react-payment-inputs";
 
 import InputIcon from "@mui/icons-material/Input";
+import PaymentConfirmationForm from "./PaymentConfirmationForm";
+
+import { depositMoney } from "../../api/transactions";
 
 export default function PaymentCard() {
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState(0);
 
   const handleNext = () => {
-    setStep(2);
+    setStep((prevStep) => prevStep + 1);
   };
 
   const handleBack = () => {
-    setStep(1);
+    if (step === 1) {
+      return;
+    }
+
+    // confirmation page
+    if (step === 3) {
+      window.location.reload();
+      return;
+    }
+
+    setStep((prevStep) => prevStep - 1);
   };
 
   const handleDepositMoney = (handler) => {
-    handleDepositMoney(handler);
+    try {
+      depositMoney(handler);
+      handleNext();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <Card>
-      <CardContent>
+    <Card sx={{ mx: -8 }} raised>
+      <Box sx={{ p: 4 }}>
         <Stack
           direction="row"
           spacing={2}
@@ -51,10 +68,10 @@ export default function PaymentCard() {
         </Stack>
         <Divider variant="middle" sx={{ mb: 2 }} />
 
-        <Card sx={{ p: 2 }}>
+        <Box sx={{ p: 2 }}>
           {/* FIRST STEP */}
           {step === 1 && (
-            <CardContent>
+            <Box>
               <Typography variant="h5" textAlign="left" sx={{ mb: 2 }}>
                 Enter Amount
               </Typography>
@@ -64,13 +81,14 @@ export default function PaymentCard() {
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
+                onChange={(e) => setAmount(e.target.value)}
               />
-            </CardContent>
+            </Box>
           )}
 
           {/* SECOND STEP */}
           {step === 2 && (
-            <CardContent>
+            <Box>
               <Typography variant="h5" textAlign="left" sx={{ mb: 2 }}>
                 Payment Information
               </Typography>
@@ -95,7 +113,12 @@ export default function PaymentCard() {
                 fullWidth
                 sx={{ mb: 2 }}
               />
-            </CardContent>
+            </Box>
+          )}
+
+          {/* THIRD STEP */}
+          {step === 3 && (
+            <PaymentConfirmationForm type="DEPOSIT" balance={amount} />
           )}
 
           <Stack
@@ -103,8 +126,6 @@ export default function PaymentCard() {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              px: 2,
-              pb: 2,
             }}
           >
             {/* Page 1: Deposit Money */}
@@ -124,8 +145,8 @@ export default function PaymentCard() {
               </Button>
             )}
           </Stack>
-        </Card>
-      </CardContent>
+        </Box>
+      </Box>
     </Card>
   );
 }
