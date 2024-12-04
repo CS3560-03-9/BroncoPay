@@ -52,6 +52,8 @@ export default function Payment() {
     }
   };
 
+  const ACTIVITY_MAX = 5; // number of recent transactions to display
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,7 +61,7 @@ export default function Payment() {
         setUser(user[0]);
 
         const transactions = await fetchActivity(tempData.user);
-        setActivity(transactions);
+        setActivity(transactions.slice(0, ACTIVITY_MAX));
 
         setLoading(false);
       } catch (err) {
