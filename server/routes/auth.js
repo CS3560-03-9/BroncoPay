@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../controllers/authController");
+const authController = require("../controllers/auth");
 
 // Signup route
 router.post("/signup", async (req, res) => {
-  const { handler, password, spendingLimit } = req.body;
-  if (!handler || !password) {
+  const { handler, password, email, spendingLimit } = req.body;
+  if (!handler || !password || !email) {
     return res
       .status(400)
-      .json({ status: "fail", message: "Handler and password are required" });
+      .json({ status: "fail", message: "Handler, Password, and Email are required" });
   }
 
   try {
-    await authController.signup(handler, password, spendingLimit);
+    await authController.signup(handler, password, email, spendingLimit);
     res
       .status(201)
       .json({ status: "success", message: "Account created successfully" });
