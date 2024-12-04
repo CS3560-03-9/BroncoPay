@@ -19,6 +19,7 @@ import { depositMoney } from "../../api/transactions";
 
 // Transaction Types: DEPOSIT, WITHDRAW, TRANSACTION
 // Make icon fontSize: 35
+// handleConfirm callback will return object 'data' = { amount: float, recipient: string, description: string }
 export default function PaymentCard({
   title,
   icon,
@@ -27,6 +28,8 @@ export default function PaymentCard({
 }) {
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState(0);
+  const [recipient, setRecipient] = useState("");
+  const [description, setDescription] = useState(""); // optional
 
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
@@ -44,6 +47,17 @@ export default function PaymentCard({
     }
 
     setStep((prevStep) => prevStep - 1);
+  };
+
+  // used for TRANSACTION (transaction_type)
+  const confirmTransaction = () => {
+    const data = {
+      amount: parseFloat(amount),
+      recipient: transaction_type === "TRANSACTION" ? recipient : null,
+      description,
+    };
+    handleConfirm(data);
+    handleNext();
   };
 
   return (
@@ -74,12 +88,33 @@ export default function PaymentCard({
                 Enter Amount
               </Typography>
               <TextField
-                id="outlined-basic"
-                label="$0.00"
+                id="amount-input"
+                label="Amount ($)"
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
+                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+              />
+              {transaction_type === "TRANSACTION" && (
+                <TextField
+                  id="username-input"
+                  label="Recipient Username"
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mb: 2 }}
+                  value={recipient}
+                  onChange={(e) => setRecipient(e.target.value)}
+                />
+              )}
+              <TextField
+                id="description-input"
+                label="Description (Optional)"
+                variant="outlined"
+                fullWidth
+                sx={{ mb: 2 }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </Box>
           )}
@@ -139,13 +174,7 @@ export default function PaymentCard({
 
             {/* Page 2: Payment Information */}
             {step === 2 && (
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  handleConfirm;
-                  handleNext();
-                }}
-              >
+              <Button variant="outlined" onClick={confirmTransaction}>
                 Confirm
               </Button>
             )}

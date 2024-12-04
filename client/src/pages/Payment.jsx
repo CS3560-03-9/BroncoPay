@@ -26,12 +26,13 @@ export default function Payment() {
   const [activity, setActivity] = useState([]);
 
   const tempData = {
-    user: "test2",
+    user: "test3",
   };
 
-  const handleDepositMoney = (handler) => {
+  const handleDepositMoney = (data) => {
+    const { amount, description } = data;
     try {
-      depositMoney(handler);
+      depositMoney(tempData.user, amount, description);
     } catch (err) {
       console.error(err);
     }
@@ -78,7 +79,9 @@ export default function Payment() {
           <PaymentCard
             title="Make a Deposit"
             icon={<InputIcon sx={{ fontSize: 35 }} />}
-            handleConfirm={handleDepositMoney(user.handler)}
+            handleConfirm={(data) => {
+              handleDepositMoney(data);
+            }}
             transaction_type="DEPOSIT"
           />
         </Grid2>
