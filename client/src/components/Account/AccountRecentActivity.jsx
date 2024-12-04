@@ -1,16 +1,9 @@
 /* eslint-disable react/prop-types */
-import {
-  Card,
-  CardContent,
-  Stack,
-  Typography,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Card, CardContent, Stack, Typography, Divider } from "@mui/material";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import AccountAcitivityEntry from "./AccountActivityEntry";
 
-export default function AccountRecentActivity({ listItems, sx }) {
+export default function AccountRecentActivity({ listItems, sx, user }) {
   return (
     <Card
       sx={{
@@ -27,7 +20,7 @@ export default function AccountRecentActivity({ listItems, sx }) {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
-            pb: 1,
+            pb: 2,
           }}
         >
           <Typography variant="h5" sx={{ pr: 1 }}>
@@ -36,21 +29,14 @@ export default function AccountRecentActivity({ listItems, sx }) {
           <ReceiptIcon />
         </Stack>
         {listItems && (
-          <List>
+          <Stack
+            spacing={2}
+            divider={<Divider sx={{ borderBottomWidth: 2 }} />}
+          >
             {listItems.map((item, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  padding: 0,
-                  py: 3,
-                  borderBottom: 1,
-                  borderColor: "grey.500",
-                }}
-              >
-                <AccountAcitivityEntry entry={item} />
-              </ListItem>
+              <AccountAcitivityEntry key={index} entry={item} user={user} />
             ))}
-          </List>
+          </Stack>
         )}
       </CardContent>
     </Card>
