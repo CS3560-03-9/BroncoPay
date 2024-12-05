@@ -47,10 +47,7 @@ getPledgebyId = async (req, res) => {
             });
         }
 
-        const pledge = await db.query(
-            'SELECT * FROM `pledges` WHERE `pledge_id` = ?', 
-            [id]
-        );
+        const pledge = getPledgeWithId(id);
         return res.status(200).json({
             status: 'success',
             data: {
@@ -102,8 +99,16 @@ createPledge = async (req, res) => {
     }
 }
 
+async function getPledgeWithId(Id) {
+    return await db.query(
+        'SELECT * FROM `pledges` WHERE `pledge_id` = ?', 
+        [Id]
+    );
+}
+
 module.exports = {
     getPledges,
     getPledgebyId,
     createPledge,
+    getPledgeWithId
 }

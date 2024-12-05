@@ -150,10 +150,18 @@ async function changeBalance(handler, amount) {
   );
 }
 
+async function getAccountByHandler(handler) {
+  return await db.query(
+      "SELECT handler, email, balance, spending_limit FROM `accounts` WHERE `handler` = ?",
+      [handler]
+  ); 
+}
+
 module.exports = {
   getAllAccounts,
   getHandlerAccount,
   updateSpendingLimit,
   deleteAccount,
+  getAccountByHandler,
   changeBalance,
 };
