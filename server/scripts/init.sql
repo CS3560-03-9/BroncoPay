@@ -66,6 +66,13 @@ INSERT INTO accounts (handler, email, balance, spending_limit) VALUES
 ('test4', 'test4@gmail.com', 0, 11),
 ('test5', 'test5@gmail.com', 334, 23);
 
+INSERT INTO account_details (handler, display_name, dob, account_desc) VALUES
+('test1', 'test1', '1990-01-01', 'test1'),
+('test2', 'test2', '1990-01-01', 'test2'),
+('test3', 'test3', '1990-01-01', 'test3'),
+('test4', 'test4', '1990-01-01', 'test4'),
+('test5', 'test5', '1990-01-01', 'test5');
+
 INSERT INTO transactions (from_handler, to_handler, amount, transaction_desc, transaction_type) VALUES
 ('test1', 'test2', 123, 'money', "TRANSACTION"),
 ('test3', 'test2', 333, 'money2', "TRANSACTION"),
