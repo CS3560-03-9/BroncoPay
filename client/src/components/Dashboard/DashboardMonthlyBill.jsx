@@ -6,7 +6,10 @@ import {
   Stack,
   Divider,
   Box,
+  Button,
 } from "@mui/material";
+
+import { useNavigate } from "react-router-dom";
 
 // Bill for subscriptions
 export default function DashboardMonthlyBill({ subscriptions, sx }) {
@@ -15,6 +18,8 @@ export default function DashboardMonthlyBill({ subscriptions, sx }) {
     (acc, sub) => acc + sub.cost,
     0
   );
+
+  const navigate = useNavigate();
   return (
     <Card
       sx={{
@@ -80,6 +85,14 @@ export default function DashboardMonthlyBill({ subscriptions, sx }) {
           <Typography variant="h5" sx={{ fontWeight: 200 }} color="info.main">
             {subscriptions.length} subscriptions
           </Typography>
+          <Button
+            variant="outlined"
+            color="info"
+            sx={{ mt: 3 }}
+            onClick={() => navigate("/subscriptions")}
+          >
+            Manage Subscriptions
+          </Button>
         </Box>
       </CardContent>
     </Card>
