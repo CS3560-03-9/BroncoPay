@@ -1,8 +1,8 @@
 const BASE_URL = "http://localhost:3000";
 
 /**
- * Retrieves all pledges for a specific handler
- * To clarify, every subscription in the output points to a pledge (FK)
+ * Retrieves all subscriptions for a specific handler
+ * To retrieve the subscription info (e.g., pricing), the pledge object is included in each subscription object
  * @param {*} handler
  */
 export async function fetchSubscriptions(handler) {
