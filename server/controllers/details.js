@@ -3,7 +3,10 @@ const db = require('../utils/db');
 getAccountDetails = async (req,res) => {
     try {
         const {handler} = req.params;
-        const details = await db.query('SELECT * FROM `account_details` WHERE `handler` = ?', [handler]);
+        const details = await db.query(
+            'SELECT * FROM `account_details` WHERE `handler` = ?', 
+            [handler]
+        );
 
         if (handler === undefined) {
             return res.status(400).json({
@@ -52,7 +55,10 @@ updateDetails = async (req, res) => {
             });
         }
 
-        const details = await db.query('SELECT * FROM `account_details` WHERE `handler` = ?', [handler]);
+        const details = await db.query(
+            'SELECT * FROM `account_details` WHERE `handler` = ?', 
+            [handler]
+        );
         if (details.length === 0) {
             return res.status(404).json({
                 status: 'fail',
@@ -85,15 +91,24 @@ updateDetails = async (req, res) => {
 }
 
 async function setDisplayName(handler, displayName) {
-    return await db.query('UPDATE `account_details` SET `display_name` = ? WHERE `handler` = ?', [displayName, handler]);
+    return await db.query(
+        'UPDATE `account_details` SET `display_name` = ? WHERE `handler` = ?', 
+        [displayName, handler]
+    );
 }
 
 async function setDateOfBirth(handler, dob) {
-    return await db.query('UPDATE `account_details` SET `dob` = ? WHERE `handler` = ?', [dob, handler]);
+    return await db.query(
+        'UPDATE `account_details` SET `dob` = ? WHERE `handler` = ?', 
+        [dob, handler]
+    );
 }
 
 async function setDescription(handler, description) {
-    return await db.query('UPDATE `account_details` SET `account_desc` = ? WHERE `handler` = ?', [description, handler]);
+    return await db.query(
+        'UPDATE `account_details` SET `account_desc` = ? WHERE `handler` = ?', 
+        [description, handler]
+    );
 }
 
 module.exports = {
