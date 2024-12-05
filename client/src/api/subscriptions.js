@@ -15,8 +15,9 @@ export async function fetchSubscriptions(handler) {
     }
 
     const subscriptions = data.subscriptions;
+    const pledges = subscriptions.map((subscription) => subscription.pledge);
 
-    return data.subscriptions;
+    return pledges;
   } catch (err) {
     throw new Error(err);
   }

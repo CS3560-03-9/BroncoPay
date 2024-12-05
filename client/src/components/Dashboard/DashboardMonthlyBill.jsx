@@ -11,7 +11,10 @@ import {
 // Bill for subscriptions
 export default function DashboardMonthlyBill({ subscriptions, sx }) {
   // Sum of all subscription costs (for now, everything should be monthly)
-  const totalSubscriptionsCost = 10;
+  const totalSubscriptionsCost = subscriptions.reduce(
+    (acc, sub) => acc + sub.cost,
+    0
+  );
   return (
     <Card
       sx={{
@@ -70,7 +73,7 @@ export default function DashboardMonthlyBill({ subscriptions, sx }) {
             >
               ${totalSubscriptionsCost}
             </Typography>
-            <Typography variant="h5" sx={{ fontWeight: 200, ml: 1.5 }}>
+            <Typography variant="h5" sx={{ fontWeight: 200, ml: 1 }}>
               over
             </Typography>
           </Box>
