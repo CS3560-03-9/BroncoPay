@@ -157,6 +157,13 @@ async function getAccountByHandler(handler) {
   ); 
 }
 
+async function accountExists(handler) {
+    return await db.query(
+      "SELECT * FROM `accounts` WHERE `handler` = ?",
+      [handler]
+    );
+}
+
 module.exports = {
   getAllAccounts,
   getHandlerAccount,
@@ -164,4 +171,5 @@ module.exports = {
   deleteAccount,
   getAccountByHandler,
   changeBalance,
+  accountExists
 };
