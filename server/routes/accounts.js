@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
+const authToken = require("../middlewares/authMiddleware.js");
 const accountController = require('../controllers/accounts');
 
-router.get('/', async function (req, res) {
+// Gets all Accounts in Database
+router.get('/', authToken.authenticateToken , async function (req, res) {
     try {
         const accounts = await accountController.getAccounts();
         res.status(200).json({
@@ -20,7 +21,8 @@ router.get('/', async function (req, res) {
     }
 });
 
-router.get('/:handler', async function (req, res) {
+// Gets Handler Account
+router.get('/:handler', authToken.authenticateToken , async function (req, res) {
     const {handler} = req.params;
     if (handler === undefined) {
         res.status(400).json({
@@ -56,7 +58,7 @@ router.get('/:handler', async function (req, res) {
     }
 });
 
-router.patch('/:handler', async function (req, res) {
+router.patch('/:handler', authToken.authenticateToken , async function (req, res) {
     const {handler} = req.params;
     if (handler === undefined) {
         res.status(400).json({
@@ -94,8 +96,11 @@ router.patch('/:handler', async function (req, res) {
     }
 });
 
-router.delete('/:handler', async function (req, res) {
+router.delete('/:handler', authToken.authenticateToken, async function (req, res) {
     const {handler} = req.params;
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
     if (handler === undefined) {
         res.status(400).json({
             status: 'fail',
