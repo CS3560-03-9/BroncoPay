@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from "@mui/material/InputAdornment";
 
 import {
   CardContent,
@@ -29,12 +29,69 @@ export default function PaymentCard({
   sx,
 }) {
   const [step, setStep] = useState(1);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(null);
   const [recipient, setRecipient] = useState("");
   const [description, setDescription] = useState(""); // optional
   const [cardNum, setCardNum] = useState("");
   const [date, setDate] = useState("");
   const [cvvValue, setCvvValue] = useState("");
+  const [errors, setErrors] = useState({
+    amount: "",
+    cardNum: "",
+    date: "",
+    cvvValue: "",
+  });
+
+  const validateInputs = () => {
+    const newErrors = {
+      amount: "",
+      cardNum: "",
+      date: "",
+      cvvValue: "",
+    };
+
+    // Validate amount
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+      newErrors.amount = "Please enter a valid amount.";
+    }
+
+    // Validate card number
+    if (cardNum.replace(/\s/g, "").length !== 16) {
+      newErrors.cardNum = "Card number must be 16 digits.";
+    }
+
+    // Validate expiration date
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(date)) {
+      newErrors.date = "Expiration date must be in MM/YY format.";
+    }
+
+    // Validate CVV
+    if (cvvValue.length !== 3 || isNaN(cvvValue)) {
+      newErrors.cvvValue = "CVV must be 3 digits.";
+    }
+
+    setErrors(newErrors);
+
+    // Return whether the inputs are valid
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  const cleanErrors = (value) => {
+    // card number
+    if (value.replace(/\s/g, "").length === 16) {
+      setErrors((prevErrors) => ({ ...prevErrors, cardNum: "" }));
+    }
+
+    // expiration date
+    if (/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+      setErrors((prevErrors) => ({ ...prevErrors, date: "" }));
+    }
+
+    // cvv
+    if (value.length === 3) {
+      setErrors((prevErrors) => ({ ...prevErrors, cvvValue: "" }));
+    }
+  };
 
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
@@ -56,6 +113,8 @@ export default function PaymentCard({
 
   // used for TRANSACTION (transaction_type)
   const confirmTransaction = () => {
+    if (!validateInputs()) return;
+
     const data = {
       amount: parseFloat(amount),
       recipient: transaction_type === "TRANSACTION" ? recipient : null,
@@ -63,14 +122,6 @@ export default function PaymentCard({
     };
     handleConfirm(data);
     handleNext();
-  };
-
-
-
-  const handleCardNum = (e) => {
-    const value = e.target.value.replace(/\D/g, "");
-    
-    setCardNum(value);
   };
 
   return (
@@ -103,30 +154,40 @@ export default function PaymentCard({
               <TextField
                 id="amount-input"
                 label="Amount ($)"
+                placholder="0"
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                InputProps={{ //I know it says its depreciated, but it wasn't working otherwise
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                InputProps={{
+                  //I know it says its depreciated, but it wasn't working otherwise
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                 }}
                 onKeyDown={(e) => {
-                if (
-                  !(  //allow keys
-                    (e.key >= "0" && e.key <= "9") ||
-                    e.key === "." ||
-                    e.key === "Backspace" ||
-                    e.key === "Tab" ||
-                    e.key === "Delete" ||
-                    e.key === "ArrowLeft" ||
-                    e.key === "ArrowRight" ||
-                    e.key === "Enter"
-                  )
-                  ) { //prevent all other keys
+                  if (
+                    !(
+                      //allow keys
+                      (
+                        (e.key >= "0" && e.key <= "9") ||
+                        e.key === "." ||
+                        e.key === "Backspace" ||
+                        e.key === "Tab" ||
+                        e.key === "Delete" ||
+                        e.key === "ArrowLeft" ||
+                        e.key === "ArrowRight" ||
+                        e.key === "Enter"
+                      )
+                    )
+                  ) {
+                    //prevent all other keys
                     e.preventDefault();
                   }
-               }}
+                }}
+                error={!!errors.amount}
+                helperText={errors.amount}
               />
               {transaction_type === "TRANSACTION" && (
                 <TextField
@@ -159,80 +220,141 @@ export default function PaymentCard({
               </Typography>
               <TextField
                 id="outlined-basic"
-                label="0000 0000 0000 0000"
+                label="Card Number"
+                placeholder="0000 0000 0000 0000"
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
-                inputProps={{ maxLength: 19 }} // 16 digits + 3 spaces (optional)
+                inputProps={{ maxLength: 19 }} // 16 digits + 3 spaces
                 value={cardNum}
-                onChange={handleCardNum}
+                onChange={(e) => {
+                  let value = e.target.value.replace(/\D/g, "");
+                  value = value.substring(0, 16);
+                  value = value.replace(/(.{4})/g, "$1 ").trim(); // space every 4 digits
+                  setCardNum(value);
+                  cleanErrors(value);
+                }}
                 onKeyDown={(e) => {
-                if (
-                  !(  //allow keys
-                    (e.key >= "0" && e.key <= "9") ||
-                    e.key === "Backspace" ||
-                    e.key === "Tab" ||
-                    e.key === "Delete" ||
-                    e.key === "ArrowLeft" ||
-                    e.key === "ArrowRight" ||
-                    e.key === "Enter" ||
-                    e.key === " "
-                  )
-                  ) { //prevent all other keys
+                  if (
+                    !(
+                      //allow keys
+                      (
+                        (e.key >= "0" && e.key <= "9") ||
+                        e.key === "Backspace" ||
+                        e.key === "Tab" ||
+                        e.key === "Delete" ||
+                        e.key === "ArrowLeft" ||
+                        e.key === "ArrowRight" ||
+                        e.key === "Enter"
+                      )
+                    )
+                  ) {
+                    //prevent all other keys
                     e.preventDefault();
                   }
-               }}
+                }}
+                onBlur={() => {
+                  if (cardNum.replace(/\s/g, "").length !== 16) {
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      cardNum: "Card number must be 16 digits.",
+                    }));
+                  }
+                }}
+                error={!!errors.cardNum}
+                helperText={errors.cardNum}
               />
               <TextField
                 id="outlined-basic"
                 label="Expiration Date"
+                placeholder="MM/YY"
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
                 inputProps={{ maxLength: 5 }} // MM/YY
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  let value = e.target.value.replace(/\D/g, "");
+                  if (value.length > 2) {
+                    value = value.substring(0, 2) + "/" + value.substring(2, 4); // slash after MM (automatic)
+                  }
+                  value = value.substring(0, 5);
+                  setDate(value);
+                  cleanErrors(value);
+                }}
                 onKeyDown={(e) => {
                   if (
-                    !(  //allow keys
-                      (e.key >= "0" && e.key <= "9") ||
-                      e.key === "Backspace" ||
-                      e.key === "Tab" ||
-                      e.key === "Delete" ||
-                      e.key === "ArrowLeft" ||
-                      e.key === "ArrowRight" ||
-                      e.key === "Enter" ||
-                      e.key === "/"
+                    !(
+                      //allow keys
+                      (
+                        (e.key >= "0" && e.key <= "9") ||
+                        e.key === "Backspace" ||
+                        e.key === "Tab" ||
+                        e.key === "Delete" ||
+                        e.key === "ArrowLeft" ||
+                        e.key === "ArrowRight" ||
+                        e.key === "Enter"
+                      )
                     )
-                    ) { //prevent all other keys
-                      e.preventDefault();
-                    }
-                 }}
+                  ) {
+                    //prevent all other keys
+                    e.preventDefault();
+                  }
+                }}
+                onBlur={() => {
+                  if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(date)) {
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      date: "Expiration date must be in MM/YY format.",
+                    }));
+                  }
+                }}
+                error={!!errors.date}
+                helperText={errors.date}
               />
               <TextField
                 id="outlined-basic"
                 label="CVV"
+                placeholder="XXX"
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
                 inputProps={{ maxLength: 3 }}
                 value={cvvValue}
-                onChange={(e) => setCvvValue(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  setCvvValue(value);
+                  cleanErrors(value);
+                }}
                 onKeyDown={(e) => {
                   if (
-                    !(  //allow keys
-                      (e.key >= "0" && e.key <= "9") ||
-                      e.key === "Backspace" ||
-                      e.key === "Tab" ||
-                      e.key === "Delete" ||
-                      e.key === "ArrowLeft" ||
-                      e.key === "ArrowRight" ||
-                      e.key === "Enter"
+                    !(
+                      //allow keys
+                      (
+                        (e.key >= "0" && e.key <= "9") ||
+                        e.key === "Backspace" ||
+                        e.key === "Tab" ||
+                        e.key === "Delete" ||
+                        e.key === "ArrowLeft" ||
+                        e.key === "ArrowRight" ||
+                        e.key === "Enter"
+                      )
                     )
-                    ) { //prevent all other keys
-                      e.preventDefault();
-                    }
-                 }}
+                  ) {
+                    //prevent all other keys
+                    e.preventDefault();
+                  }
+                }}
+                onBlur={() => {
+                  if (cvvValue.length !== 3) {
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      cvvValue: "CVV must be 3 digits.",
+                    }));
+                  }
+                }}
+                error={!!errors.cvvValue}
+                helperText={errors.cvvValue}
               />
             </Box>
           )}
