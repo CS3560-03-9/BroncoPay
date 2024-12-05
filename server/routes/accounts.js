@@ -1,84 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const authToken = require("../middlewares/authMiddleware.js");
+const accountController = require('../controllers/accounts.js');
 
-const accountController = require('../controllers/accounts');
+// Gets all Accounts in Database
+router.get('/', authToken.authenticateToken, accountController.getAllAccounts);
 
-router.get('/', async function (req, res) {
-	try {
-		const accounts = await accountController.getUsers();
-		res.status(200).json({
-			status: 'success',
-			data: {
-				accounts: accounts,
-			},
-		});
-	} catch (err) {
-		res.status(500).json({
-			status: 'error',
-			message: err.message,
-		});
-	}
-});
+// Gets Handler Account
+router.get('/:handler', authToken.authenticateToken, accountController.getHandlerAccount);
 
-router.get('/:handler', async function (req, res) {
-	const {handler} = req.params;
-	if (handler === undefined) {
-		res.status(400).json({
-			status: 'fail',
-			data: {
-				handler: 'handler is missing',
-			},
-		});
-		return;
-	}
-	try {
-		const account = await accountController.getUser(handler);
-		if (account.length === 0) {
-			res.status(404).json({
-				status: 'fail',
-				data: {
-					handler: 'account not found',
-				},
-			});
-			return;
-		}
-		res.status(200).json({
-			status: 'success',
-			data: {
-				account: account,
-			},
-		});
-	} catch (err) {
-		res.status(500).json({
-			status: 'error',
-			message: err.message,
-		});
-	}
-});
+// Update Spending Limit of Handler
+router.patch('/:handler', authToken.authenticateToken, accountController.updateSpendingLimit);
 
-router.delete('/:handler', async function (req, res) {
-	const {handler} = req.params;
-	if (handler === undefined) {
-		res.status(400).json({
-			status: 'fail',
-			data: {
-				handler: 'handler is missing',
-			},
-		});
-		return;
-	}
-	try {
-		await accountController.deleteUser(handler);
-		res.status(200).json({
-			status: 'success',
-			data: null,
-		});
-	} catch (err) {
-		res.status(500).json({
-			status: 'error',
-			message: err.message,
-		});
-	}
-});
+// Delete Handler
+router.delete('/:handler',authToken.authenticateToken, accountController.deleteAccount);
+
 
 module.exports = router;
