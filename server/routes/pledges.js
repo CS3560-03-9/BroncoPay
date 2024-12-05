@@ -6,12 +6,25 @@ const pledgeValidator = require('../validators/pledges');
 const authToken = require('../middlewares/authMiddleware');
 
 // Gets Pledges by handler
-router.get('/handler/:handler', authToken.authenticateToken, pledgeController.getPledges);
+router.get(
+    '/handler/:handler', 
+    authToken.authenticateToken, 
+    pledgeController.getPledges
+);
 
 // Get Pledges by id
-router.get('/id/:id', authToken.authenticateToken, pledgeController.getPledgebyId);
+router.get(
+    '/id/:id', 
+    authToken.authenticateToken, 
+    pledgeController.getPledgebyId
+);
 
 // Create Pledge
-router.post('/',authToken.authenticateToken, pledgeValidator.createPledgeValidator, pledgeController.createPledge);
+router.post(
+    '/',
+    authToken.authenticateToken, 
+    pledgeValidator.createPledgeValidator, 
+    pledgeController.createPledge
+);
 
 module.exports = router;
