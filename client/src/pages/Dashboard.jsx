@@ -75,7 +75,7 @@ export default function Dashboard() {
               balance={tempData.monthly_spending}
               limit={user?.spending_limit || 0}
             />
-            {/* <DashboardMonthlyBill transactions={subscriptions} /> */}
+            <DashboardMonthlyBill subscriptions={subscriptions} />
           </Stack>
         </Grid2>
 
