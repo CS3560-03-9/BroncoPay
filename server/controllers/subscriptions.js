@@ -3,7 +3,14 @@ const accountsController = require('./accounts');
 const pledgeController = require('./pledges');
 
 async function getSubscriptions(handler) {
-    return await db.query('SELECT * FROM `subscriptions` WHERE `handler` = ?', [handler]);
+    let subscriptions = await db.query('SELECT * FROM `subscriptions` WHERE `handler` = ?', [handler]);
+    for (let i = 0; i < subscriptions.length; i++) {
+        const pledgeId = subscriptions[i].pledge_id;
+        let pledge = await pledgeController.getPledge(pledgeId);
+        subscriptions[i].pledge = pledge[0];
+        subscriptions[i].pledge_id = undefined;
+    }
+    return subscriptions;
 }
 
 async function createSubscription(body) {
