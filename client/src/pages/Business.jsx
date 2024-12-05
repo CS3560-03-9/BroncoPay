@@ -120,6 +120,7 @@ export default function Business() {
             pageSize={10}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            sx={{ height: 600 }}
           />
         </Grid2>
       </Grid2>
