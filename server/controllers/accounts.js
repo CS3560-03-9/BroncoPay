@@ -2,7 +2,9 @@ const db = require('../utils/db');
 
 getAllAccounts = async (req, res) => {
     try {
-        const accounts = await db.query('SELECT * FROM `accounts`');
+        const accounts = await db.query(
+            'SELECT * FROM `accounts`'
+        );
         res.status(200).json({
             status:'success',
             data: {
@@ -27,7 +29,9 @@ getHandlerAccount = async (req, res) => {
         })
     }
     try {
-        const account = await db.query('SELECT handler, email, balance, spending_limit FROM `accounts`');
+        const account = await db.query(
+            'SELECT handler, email, balance, spending_limit FROM `accounts`'
+        );
         if (account.length === 0) {
             res.status(404).json({
                 status: 'fail',
@@ -66,7 +70,10 @@ updateSpendingLimit = async (req, res) => {
     }
 
     try {
-        const account = await db.query('SELECT * FROM `accounts` WHERE `handler` = ?', [handler]);
+        const account = await db.query(
+            'SELECT * FROM `accounts` WHERE `handler` = ?', 
+            [handler]
+        );
         if (account.length === 0) {
             res.status(404).json({
                 status: 'fail',
@@ -78,7 +85,10 @@ updateSpendingLimit = async (req, res) => {
         
         console.log(limit);
         if (!isNaN(limit) && isFinite(limit)) {
-            const limitTest = await db.query('UPDATE `accounts` SET `spending_limit` = ? WHERE `handler` = ?', [limit, handler]);
+            const limitTest = await db.query(
+                'UPDATE `accounts` SET `spending_limit` = ? WHERE `handler` = ?', 
+                [limit, handler]
+            );
             
             res.status(204).json({
                 status: 'success',
@@ -118,7 +128,10 @@ deleteAccount = async (req, res) => {
     }
 
     try {
-        const deletion = await db.query('DELETE FROM `accounts` WHERE `handler` = ?', [handler]); 
+        const deletion = await db.query(
+            'DELETE FROM `accounts` WHERE `handler` = ?', 
+            [handler]
+        ); 
 
         res.status(204).json({
             status: 'success',
@@ -133,7 +146,10 @@ deleteAccount = async (req, res) => {
 }
 
 async function changeBalance(handler, amount) {
-    return await db.query('UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?', [amount, handler]);
+    return await db.query(
+        'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?', 
+        [amount, handler]
+    );
 }
 
 async function existingAccount(handler, email) {
@@ -151,7 +167,10 @@ async function existingAccount(handler, email) {
         params.push(handler);
     }
 
-    return await db.query(query, params);
+    return await db.query(
+        query, 
+        params
+    );
 }
 
 module.exports = {
