@@ -71,7 +71,7 @@ updateSpendingLimit = async (req, res) => {
 
     try {
         const account = await db.query(
-            'SELECT * FROM `accounts` WHERE `handler` = ?', 
+            'SELECT * FROM `accounts` WHERE `handler` = ?',
             [handler]
         );
         if (account.length === 0) {
@@ -82,11 +82,11 @@ updateSpendingLimit = async (req, res) => {
                 },
             });
         }
-        
+
         console.log(limit);
         if (!isNaN(limit) && isFinite(limit)) {
             const limitTest = await db.query(
-                'UPDATE `accounts` SET `spending_limit` = ? WHERE `handler` = ?', 
+                'UPDATE `accounts` SET `spending_limit` = ? WHERE `handler` = ?',
                 [limit, handler]
             );
             
@@ -129,9 +129,9 @@ deleteAccount = async (req, res) => {
 
     try {
         const deletion = await db.query(
-            'DELETE FROM `accounts` WHERE `handler` = ?', 
+            'DELETE FROM `accounts` WHERE `handler` = ?',
             [handler]
-        ); 
+        );
 
         res.status(204).json({
             status: 'success',
@@ -147,7 +147,7 @@ deleteAccount = async (req, res) => {
 
 async function changeBalance(handler, amount) {
     return await db.query(
-        'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?', 
+        'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?',
         [amount, handler]
     );
 }
@@ -168,7 +168,7 @@ async function existingAccount(handler, email) {
     }
 
     return await db.query(
-        query, 
+        query,
         params
     );
 }
