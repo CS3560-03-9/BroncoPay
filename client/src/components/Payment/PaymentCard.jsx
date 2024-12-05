@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import InputAdornment from '@mui/material/InputAdornment';
 
 import {
   CardContent,
@@ -31,6 +32,9 @@ export default function PaymentCard({
   const [amount, setAmount] = useState(0);
   const [recipient, setRecipient] = useState("");
   const [description, setDescription] = useState(""); // optional
+  const [cardNum, setCardNum] = useState("");
+  const [date, setDate] = useState("");
+  const [cvvValue, setCvvValue] = useState("");
 
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
@@ -59,6 +63,14 @@ export default function PaymentCard({
     };
     handleConfirm(data);
     handleNext();
+  };
+
+
+
+  const handleCardNum = (e) => {
+    const value = e.target.value.replace(/\D/g, "");
+    
+    setCardNum(value);
   };
 
   return (
@@ -96,6 +108,25 @@ export default function PaymentCard({
                 sx={{ mb: 2 }}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                InputProps={{ //I know it says its depreciated, but it wasn't working otherwise
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
+                onKeyDown={(e) => {
+                if (
+                  !(  //allow keys
+                    (e.key >= "0" && e.key <= "9") ||
+                    e.key === "." ||
+                    e.key === "Backspace" ||
+                    e.key === "Tab" ||
+                    e.key === "Delete" ||
+                    e.key === "ArrowLeft" ||
+                    e.key === "ArrowRight" ||
+                    e.key === "Enter"
+                  )
+                  ) { //prevent all other keys
+                    e.preventDefault();
+                  }
+               }}
               />
               {transaction_type === "TRANSACTION" && (
                 <TextField
@@ -132,6 +163,25 @@ export default function PaymentCard({
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
+                inputProps={{ maxLength: 19 }} // 16 digits + 3 spaces (optional)
+                value={cardNum}
+                onChange={handleCardNum}
+                onKeyDown={(e) => {
+                if (
+                  !(  //allow keys
+                    (e.key >= "0" && e.key <= "9") ||
+                    e.key === "Backspace" ||
+                    e.key === "Tab" ||
+                    e.key === "Delete" ||
+                    e.key === "ArrowLeft" ||
+                    e.key === "ArrowRight" ||
+                    e.key === "Enter" ||
+                    e.key === " "
+                  )
+                  ) { //prevent all other keys
+                    e.preventDefault();
+                  }
+               }}
               />
               <TextField
                 id="outlined-basic"
@@ -139,6 +189,25 @@ export default function PaymentCard({
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
+                inputProps={{ maxLength: 5 }} // MM/YY
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                onKeyDown={(e) => {
+                  if (
+                    !(  //allow keys
+                      (e.key >= "0" && e.key <= "9") ||
+                      e.key === "Backspace" ||
+                      e.key === "Tab" ||
+                      e.key === "Delete" ||
+                      e.key === "ArrowLeft" ||
+                      e.key === "ArrowRight" ||
+                      e.key === "Enter" ||
+                      e.key === "/"
+                    )
+                    ) { //prevent all other keys
+                      e.preventDefault();
+                    }
+                 }}
               />
               <TextField
                 id="outlined-basic"
@@ -146,6 +215,24 @@ export default function PaymentCard({
                 variant="outlined"
                 fullWidth
                 sx={{ mb: 2 }}
+                inputProps={{ maxLength: 3 }}
+                value={cvvValue}
+                onChange={(e) => setCvvValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (
+                    !(  //allow keys
+                      (e.key >= "0" && e.key <= "9") ||
+                      e.key === "Backspace" ||
+                      e.key === "Tab" ||
+                      e.key === "Delete" ||
+                      e.key === "ArrowLeft" ||
+                      e.key === "ArrowRight" ||
+                      e.key === "Enter"
+                    )
+                    ) { //prevent all other keys
+                      e.preventDefault();
+                    }
+                 }}
               />
             </Box>
           )}

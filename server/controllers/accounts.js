@@ -1,7 +1,7 @@
-const db = require("../utils/db");
+const db = require('../utils/db');
 
 getAllAccounts = async (req, res) => {
-  try {
+ try {
     const accounts = await db.query(
         "SELECT handler, email, balance, spending_limit FROM `accounts`"
     );
@@ -144,10 +144,31 @@ deleteAccount = async (req, res) => {
 };
 
 async function changeBalance(handler, amount) {
-  return await db.query(
-    "UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?",
-    [amount, handler]
-  );
+    return await db.query(
+        'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?',
+        [amount, handler]
+    );
+}
+
+async function existingAccount(handler, email) {
+    let query = "SELECT * FROM 'accounts' WHERE ";
+    const params = [];
+
+    if (email) {
+        query += "`email` = ?";
+        params.push(email);
+    }
+
+    if (handler) {
+        if (email) query += " OR ";
+        query += "`handler` = ?";
+        params.push(handler);
+    }
+
+    return await db.query(
+        query,
+        params
+    );
 }
 
 async function getAccountByHandler(handler) {
