@@ -1,8 +1,7 @@
 const {validationResult} = require("express-validator");
 
 const db = require('../utils/db');
-const businessController = require("./businesses");
-const pledgeValidator = require('../validators/pledges');
+const businessController = require("../controllers/businesses");
 
 getPledges = async (req, res) => {
     try {
@@ -75,7 +74,17 @@ createPledge = async (req, res) => {
                     data: validation.array(),
                 });
         }
+
         const {handler, cost, interval, description} = req.body;
+
+        const businessExists = await businessController.businessExists(handler);
+        if (!businessExists) {
+            return res.status(404).json({
+                    status: 'fail',
+                    message: 'Business does not exist',
+            });
+        }
+
         await db.query(
         'INSERT INTO `pledges` (`handler`, `cost`, `pledge_interval`, `pledge_desc`) VALUES (?, ?, ?, ?)',
         [handler, cost, interval, description]
