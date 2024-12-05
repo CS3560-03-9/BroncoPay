@@ -136,6 +136,13 @@ async function changeBalance(handler, amount) {
     return await db.query('UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?', [amount, handler]);
 }
 
+async function existingAccount(handler) {
+    return await db.query(
+        "SELECT * FROM `accounts` WHERE `email` = ? OR `handler` = ?",
+        [email, handler]
+    );
+}
+
 module.exports = {
     getAllAccounts,
     getHandlerAccount,
