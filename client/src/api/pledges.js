@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:3000";
 
 export async function fetchPledges(handler) {
-  const response = await fetch(`${BASE_URL}/pledges/${handler}`);
+  const response = await fetch(`${BASE_URL}/pledges/handler/${handler}`);
   const { status, data } = await response.json();
 
   if (!response.ok || status !== "success") {
