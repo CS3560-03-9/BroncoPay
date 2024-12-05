@@ -4,6 +4,10 @@ dotenv.config();
 
 // Authenticates Token
 function authenticateToken(req, res, next) {
+  if (process.env.NODE_ENV === 'development') {
+    return next();
+  }
+
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
