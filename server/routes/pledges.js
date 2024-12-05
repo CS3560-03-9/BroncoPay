@@ -1,86 +1,30 @@
 const express = require('express');
-const {validationResult} = require("express-validator");
 
 const router = express.Router();
 const pledgeController = require('../controllers/pledges');
 const pledgeValidator = require('../validators/pledges');
+const authToken = require('../middlewares/authMiddleware');
 
-router.get('/handler/:handler', async function (req, res) {
-    const {handler} = req.params;
-    if (handler === undefined) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                handler: 'handler is missing',
-            },
-        });
-        return;
-    }
-    try {
-        const pledges = await pledgeController.getPledges(handler);
-        res.status(200).json({
-            status: 'success',
-            data: {
-                pledges: pledges,
-            },
-        });
-    } catch (err) {
-        res.status(500).json({
-            status: 'error',
-            message: err.message,
-        });
-    }
-});
+// Gets Pledges by handler
+router.get(
+    '/handler/:handler', 
+    authToken.authenticateToken, 
+    pledgeController.getPledges
+);
 
-router.get('/id/:id', async function (req, res) {
-    const {id} = req.params;
-    if (id === undefined) {
-        res.status(400).json({
-            status: 'fail',
-            data: {
-                id: 'id is missing',
-            },
-        });
-        return;
-    }
-    try {
-        const pledge = await pledgeController.getPledge(id);
-        res.status(200).json({
-            status: 'success',
-            data: {
-                pledge: pledge[0],
-            },
-        });
-    } catch (err) {
-        res.status(500).json({
-            status: 'error',
-            message: err.message,
-        });
-    }
-});
+// Get Pledges by id
+router.get(
+    '/id/:id', 
+    authToken.authenticateToken, 
+    pledgeController.getPledgebyId
+);
 
-router.post('/', pledgeValidator.createPledgeValidator,
-    async function (req, res) {
-        try {
-            const validation = validationResult(req);
-            if (!validation.isEmpty()) {
-                res.status(200).json({
-                    status: 'fail',
-                    data: validation.array(),
-                });
-                return;
-            }
-            await pledgeController.createPledge(req.body);
-            res.status(200).json({
-                status: 'success',
-                data: null,
-            });
-        } catch (err) {
-            res.status(500).json({
-                status: 'error',
-                message: err.message,
-            });
-        }
-    });
+// Create Pledge
+router.post(
+    '/',
+    authToken.authenticateToken, 
+    pledgeValidator.createPledgeValidator, 
+    pledgeController.createPledge
+);
 
 module.exports = router;

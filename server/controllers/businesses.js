@@ -47,7 +47,8 @@ getBusiness = async (req, res) => {
 }
 
 async function businessExists(handler) {
-    return await db.query('SELECT EXISTS(SELECT * FROM `businesses` WHERE `handler` = ?)', [handler]);
+  const result = await db.query('SELECT EXISTS(SELECT 1 FROM `businesses` WHERE `handler` = ?) AS `exists`', [handler]);
+  return result[0].exists === 1;
 }
 
 module.exports = {
