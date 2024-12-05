@@ -100,17 +100,16 @@ export default function Business() {
                 />
               </Grid2>
             </Grid2>
-            <Grid2 container spacing={2}>
-              {/* Something */}
+            {/* filler buttons */}
+            {/* <Grid2 container spacing={2}>
               <Grid2 size={6}>
                 <BusinessActionButton text={"test"} icon={"?"} />
               </Grid2>
 
-              {/* Something */}
               <Grid2 size={6}>
                 <BusinessActionButton text={"filler"} icon={"?"} />
               </Grid2>
-            </Grid2>
+            </Grid2> */}
           </Stack>
         </Grid2>
         <Grid2 size={9}>
