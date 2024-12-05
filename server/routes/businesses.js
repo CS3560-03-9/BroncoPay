@@ -1,23 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const authToken = require("../middlewares/authMiddleware.js");
 const businessController = require('../controllers/businesses');
 
-router.get('/', async function (req, res) {
-    try {
-        const businesses = await businessController.getBusinesses();
-        res.status(200).json({
-            status: 'success',
-            data: {
-                businesses: businesses,
-            },
-        });
-    } catch (err) {
-        res.status(500).json({
-            status: 'error',
-            message: err.message,
-        });
-    }
-});
+// Get all Businesses
+router.get('/', authToken.authenticateToken, businessController.getAllBusinesses);
+
+// Get a Business
+router.get('/:handler', authToken.authenticateToken, businessController.getBusiness);
 
 module.exports = router;
