@@ -136,11 +136,22 @@ async function changeBalance(handler, amount) {
     return await db.query('UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?', [amount, handler]);
 }
 
-async function existingAccount(handler) {
-    return await db.query(
-        "SELECT * FROM `accounts` WHERE `email` = ? OR `handler` = ?",
-        [email, handler]
-    );
+async function existingAccount(handler, email) {
+    let query = "SELECT * FROM 'accounts' WHERE ";
+    const params = [];
+
+    if (email) {
+        query += "`email` = ?";
+        params.push(email);
+    }
+
+    if (handler) {
+        if (email) query += " OR ";
+        query += "`handler` = ?";
+        params.push(handler);
+    }
+
+    return await db.query(query, params);
 }
 
 module.exports = {
@@ -149,4 +160,5 @@ module.exports = {
     updateSpendingLimit,
     deleteAccount,
     changeBalance,
+    existingAccount,
 };
