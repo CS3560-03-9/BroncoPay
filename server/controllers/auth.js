@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const accountController = require('../controllers/accounts');
 dotenv.config();
 const db = require("../utils/db");
 
