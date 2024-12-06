@@ -5,6 +5,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import { useEffect, useState } from "react";
+import { fetchBusiness } from "./api/businesses";
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PaymentIcon from "@mui/icons-material/Payment";
@@ -16,6 +19,22 @@ import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
 
 function App() {
+  const [isBusiness, setIsBusiness] = useState(false);
+  const currentHandler = localStorage.getItem("handler");
+
+  useEffect(() => {
+    const checkBusiness = async () => {
+      try {
+        const result = await fetchBusiness(currentHandler);
+        if (result.length > 0) {
+          setIsBusiness(true);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    checkBusiness();
+  });
   const NAVIGATION = [
     {
       kind: "header",
@@ -37,11 +56,15 @@ function App() {
       title: "Subscriptions",
       icon: <SellIcon />,
     },
-    {
-      segment: "business",
-      title: "Business",
-      icon: <BusinessCenterIcon />,
-    },
+    ...(isBusiness
+      ? [
+          {
+            segment: "business",
+            title: "Business",
+            icon: <BusinessCenterIcon />,
+          },
+        ]
+      : []),
     {
       kind: "divider",
     },
