@@ -62,45 +62,45 @@ CREATE TABLE subscriptions (
 );
 
 INSERT INTO accounts (handler, email, password, balance, monthly_spent, spending_limit) VALUES
-('test1', 'test1@gmail.com', '$2b$10$bSPgtO.JCQwFOKol8Scvw.p5e13vTHYQqC4YowJ7bDozIjhthcBHK', 123, 1, 10),
-('test2', 'test2@gmail.com', '$2b$10$dWkROd/5MHoVZJxNI4w3WeTM9rWAOd8QE2peN3eKOJkzHykdfJGY6', 143, 2, 7),
-('Gym', 'Gym@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 3, 140),
-('test4', 'test4@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 0, 4, 11),
-('test5', 'test5@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 334, 5, 23);
+('consumera', 'consumera@gmail.com', '$2b$10$bSPgtO.JCQwFOKol8Scvw.p5e13vTHYQqC4YowJ7bDozIjhthcBHK', 123, 1, 10),
+('consumerb', 'consumerb@gmail.com', '$2b$10$dWkROd/5MHoVZJxNI4w3WeTM9rWAOd8QE2peN3eKOJkzHykdfJGY6', 143, 2, 7),
+('gym', 'gym@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 3, 140),
+('disney', 'disney@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 0, 4, 11),
+('consumerc', 'consumerc@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 334, 5, 23);
 
 INSERT INTO account_details (handler, display_name, dob, account_desc) VALUES
-('test1', 'test1', '1990-01-01', 'test1'),
-('test2', 'test2', '1990-01-01', 'test2'),
-('Gym', 'Gym', '1990-01-01', 'Gym'),
-('test4', 'test4', '1990-01-01', 'test4'),
-('test5', 'test5', '1990-01-01', 'test5');
+('consumera', 'consumera', '1990-01-01', 'consumera'),
+('consumerb', 'consumerb', '1990-01-01', 'consumerb'),
+('gym', 'gym', '1990-01-01', 'gym'),
+('disney', 'disney', '1990-01-01', 'disney'),
+('consumerc', 'consumerc', '1990-01-01', 'consumerc');
 
 INSERT INTO transactions (from_handler, to_handler, amount, transaction_desc, transaction_type) VALUES
-('test1', 'test2', 123, 'money', "TRANSACTION"),
-('Gym', 'test2', 333, 'money2', "TRANSACTION"),
-('test1', 'test2', 1, 'mone3', "TRANSACTION"),
-('test4', 'test5', 235, 'mone4y', "TRANSACTION"),
-('test1', 'test2', 78, 'mon6ey', "TRANSACTION");
+('consumera', 'consumerb', 123, 'money', "TRANSACTION"),
+('gym', 'consumerb', 333, 'money2', "TRANSACTION"),
+('consumera', 'consumerb', 1, 'mone3', "TRANSACTION"),
+('disney', 'consumerc', 235, 'mone4y', "TRANSACTION"),
+('consumera', 'consumerb', 78, 'mon6ey', "TRANSACTION");
 
 INSERT INTO businesses (handler) VALUES
-('Gym'),
-('test4');
+('gym'),
+('disney');
 
 INSERT INTO pledges (handler, cost, pledge_interval, pledge_desc) VALUES
-('Gym', 100, 30, 'Tier 1 Membership'),
-('Gym', 200, 30, 'Tier 2 Membership'),
-('Gym', 300, 30, 'Tier 3 Membership'),
-('test4', 400, 30, 'pledge1'),
-('test4', 500, 30, 'pledge2');
+('gym', 100, 30, 'Tier 1 Membership'),
+('gym', 200, 30, 'Tier 2 Membership'),
+('gym', 300, 30, 'Tier 3 Membership'),
+('disney', 10, 30, 'Disney+ Subscription with Ads'),
+('disney', 15, 30, 'Disney+ Subscription without Ads');
 
 INSERT INTO subscriptions (handler, pledge_id) VALUES
-('test1', 1),
-('test2', 1),
-('test5', 2),
-('test1', 2),
-('test5', 3),
-('test1', 4),
-('test2', 4),
-('test5', 5),
-('test1', 5),
-('test5', 1);
+('consumera', 1),
+('consumerb', 1),
+('consumerc', 2),
+('consumera', 2),
+('consumerc', 3),
+('consumera', 4),
+('consumerb', 4),
+('consumerc', 5),
+('consumera', 5),
+('consumerc', 1);
