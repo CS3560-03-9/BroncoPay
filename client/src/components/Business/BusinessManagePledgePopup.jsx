@@ -50,7 +50,7 @@ export default function BusinessManagePledgePopup({
             </Typography>
           </Stack>
           <Divider variant="middle" sx={{ mb: 2 }} />
-          <Typography>{`Pledge ID: ${pledge.pledge_id}`}</Typography>
+          <Typography>{`Pledge ID: ${pledge?.pledge_id}`}</Typography>
         </Box>
       </Card>
     </Dialog>
