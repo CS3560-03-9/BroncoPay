@@ -28,6 +28,7 @@ export default function Login() {
       }
 
       navigate("/");
+      window.location.reload();
     } catch (err) {
       console.log(err);
       alert("Error signing in. Please try again.");

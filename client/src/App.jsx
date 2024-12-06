@@ -17,9 +17,11 @@ import SellIcon from "@mui/icons-material/Sell";
 
 import { AppProvider } from "@toolpad/core";
 import { Outlet } from "react-router-dom";
+import LoadingPage from "./components/LoadingPage";
 
 function App() {
   const [isBusiness, setIsBusiness] = useState(false);
+  const [loading, setLoading] = useState(true);
   const currentHandler = localStorage.getItem("handler");
 
   useEffect(() => {
@@ -28,6 +30,7 @@ function App() {
         const result = await fetchBusiness(currentHandler);
         if (result.length > 0) {
           setIsBusiness(true);
+          setLoading(false);
         }
       } catch (err) {
         console.error(err);
