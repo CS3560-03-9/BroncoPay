@@ -31,9 +31,11 @@ const Pledges = ({ handler, index }) => {
     <div>
       {pledge ? (
         <div key={pledge.id} style={{ padding: 10 }}>
-          <p><strong>Pledge ID:</strong> {pledge.pledge_id}</p>
-          <p><strong>Amount:</strong> {pledge.cost}</p>
+          {/* <p><strong>Pledge ID:</strong> {pledge.pledge_id}</p> */}
+          <p><strong>Handler:</strong> {pledge.handler}</p>
+          <p><strong>Cost:</strong> {pledge.cost}</p>
           <p><strong>Description:</strong> {pledge.pledge_desc}</p>
+          <p><strong>Interval:</strong> {pledge.pledge_interval} days</p>
         </div>
       ) : (
         <p style={{ padding: 10 }}>No pledge found for this index.</p>

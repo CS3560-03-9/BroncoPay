@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Carousel from 'react-material-ui-carousel'; // Adjust the import if needed
-import { fetchPledges } from '../api/pledges'; // Adjust the import if needed
-import Pledges from './Pledges'; // Adjust the path if needed
+import Carousel from 'react-material-ui-carousel'; 
+import { fetchAllPledges, fetchPledges } from '../api/pledges'; 
+import Pledges from './Pledges'; 
 
 const PledgesCarousel = ({ handler }) => {
   const [pledges, setPledges] = useState([]);
@@ -11,19 +11,20 @@ const PledgesCarousel = ({ handler }) => {
   useEffect(() => {
     const loadPledges = async () => {
       try {
-        const data = await fetchPledges(handler);
-        setPledges(data); // Set the pledges data
+        const data = await fetchAllPledges();
+        setPledges(data); 
       } catch (err) {
-        setError(err.message); // Handle any errors
+        setError(err.message); 
       } finally {
-        setLoading(false); // Stop loading spinner
+        setLoading(false); 
       }
     };
 
     loadPledges();
   }, [handler]);
 
-  // Render loading or error messages
+  
+ 
   if (loading) return <p>Loading pledges...</p>;
   if (error) return <p>Error: {error}</p>;
 
