@@ -31,4 +31,10 @@ router.delete(
   accountController.deleteAccount
 );
 
+router.delete(
+	"/:handler/monthly-spent",
+	authToken.authenticateToken,
+	accountController.resetMonthlySpent
+);
+
 module.exports = router;
