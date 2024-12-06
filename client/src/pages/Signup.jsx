@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -8,9 +9,36 @@ import {
   Divider,
 } from "@mui/material";
 
-export default function Login() {
-  const handleSignUp = () => {
-    // ** TODO: API shenanigans here **
+export default function SignUp() {
+  const navigate = useNavigate();
+  const [handler, setHandler] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+
+  const handleSignUp = async (e) => {
+    e.preventDefault(); 
+
+    try {
+      const response = await fetch("http://localhost:3000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ handler, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/login");
+      } else {
+        setError(data.message || "Something went wrong");
+      }
+    } catch (err) {
+      setError("An error occurred during signup");
+    }
   };
 
   return (
@@ -31,14 +59,16 @@ export default function Login() {
       <Typography variant="subtitle2" color="gray">
         Create a new account
       </Typography>
-      <FormControl fullWidth>
+      <FormControl fullWidth component="form" onSubmit={handleSignUp}>
         <TextField
           label="Username"
-          type="username"
+          type="text"
           variant="standard"
           fullWidth
           margin="dense"
           required
+          value={handler}
+          onChange={(e) => setHandler(e.target.value)}
         />
         <TextField
           label="Email"
@@ -47,6 +77,8 @@ export default function Login() {
           fullWidth
           margin="dense"
           required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           label="Password"
@@ -55,19 +87,23 @@ export default function Login() {
           fullWidth
           margin="dense"
           required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
+        {error && (
+          <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        )}
         <Button
           type="submit"
           variant="outlined"
           color="primary"
           sx={{ mt: 4 }}
-          onClick={handleSignUp}
         >
           Sign up
         </Button>
-        <Divider variant="middle" sx={{ my: 3 }}>
-          <Typography variant="subtitle1">or</Typography>
-        </Divider>
+        <Divider variant="middle" sx={{ my: 3 }} />
         <Button href="/login" variant="text" size="small">
           Login
         </Button>

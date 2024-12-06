@@ -29,12 +29,7 @@ return (
   <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
   <item><p><Pledges handler={tempData.user} index={3} /></p></item>
   </Grid2>
-  <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
-  <item><p><Pledges handler={tempData.user} index={4} /></p></item>
-  </Grid2>
-  <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
-  <item><p><Pledges handler={tempData.user} index={5} /></p></item>
-  </Grid2>
+ 
 </Grid2>
 
     <PledgesCarousel handler={tempData.user}></PledgesCarousel>
