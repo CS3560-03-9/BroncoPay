@@ -1,3 +1,4 @@
+
 import "./App.css";
 
 import "@fontsource/roboto/300.css";
@@ -37,7 +38,9 @@ function App() {
       }
     };
     checkBusiness();
-  });
+  }, [currentHandler]); 
+
+
   const NAVIGATION = [
     {
       kind: "header",
@@ -54,11 +57,15 @@ function App() {
       title: "Payments",
       icon: <PaymentIcon />,
     },
-    {
-      segment: "subscriptions",
-      title: "Subscriptions",
-      icon: <SellIcon />,
-    },
+    ...(currentHandler !== 'disney'
+      ? [
+          {
+            segment: "subscriptions",
+            title: "Subscriptions",
+            icon: <SellIcon />,
+          },
+        ]
+      : []),
     ...(isBusiness
       ? [
           {
@@ -90,8 +97,6 @@ function App() {
         title: "BroncoPay",
       }}
     >
-      {/* <BasicTable /> */}
-      {/* <ButtonUsage/> */}
       <Outlet />
     </AppProvider>
   );

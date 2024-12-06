@@ -92,9 +92,10 @@ export async function deletePledge(pledgeID) {
 export async function fetchAllPledges(handler) {
   const response = await fetch(`${BASE_URL}/pledges/`)
   const { status, data } = await response.json();
-
+  console.log(response)
   if (!response.ok || status !== "success") {
     throw new Error("Failed to fetch pledges");
+   
   }
 
   return data.pledges; // returns an array of pledge objects

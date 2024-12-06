@@ -4,10 +4,15 @@ import { Paper, Button, Grid2 } from "@mui/material";
 import Pledges from "../components/Pledges";
 import PledgesCarousel from "../components/pledgesCar";
 
-export default function Subscriptions({ handler }) {
+export default function Subscriptions({ handler, pledge, index}) {
   const [items, setItems] = useState([]);
 
   const currentHandler = localStorage.getItem("handler");
+  
+  if (currentHandler === 'disney') {
+    return null; 
+  }
+
 
   return (
     <>
