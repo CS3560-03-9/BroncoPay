@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 
-import { Box, Grid2, Stack } from "@mui/material";
+import { Box, Grid2, Stack, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 import PageTitle from "../components/PageTitle";
@@ -28,6 +28,8 @@ export default function Business() {
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false); // Withdraw dialog
   const [pledgeDialogOpen, setPledgeDialogOpen] = useState(false); // New pledge dialog
 
+  const [selectedPledge, setSelectedPledge] = useState(null); // pledge id
+
   const tempData = {
     user: "test3", // test3 and test4 are the only businesses in the system
     // no other user should be able to see this page
@@ -38,7 +40,44 @@ export default function Business() {
     { field: "handler", headerName: "Business", width: 150 },
     { field: "cost", headerName: "Cost", width: 150 },
     { field: "pledge_interval", headerName: "Interval", width: 150 },
-    { field: "pledge_desc", headerName: "Description", width: 500 },
+    {
+      field: "pledge_desc",
+      headerName: "Description",
+      flex: 1,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              flexGrow: 1,
+              pr: 6,
+            }}
+          >
+            {params.row.pledge_desc}
+          </Typography>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => handleManagePledge(params.row)}
+            size="small"
+            sx={{ mr: 3 }}
+          >
+            Manage
+          </Button>
+        </Box>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -78,6 +117,12 @@ export default function Business() {
     } catch (err) {
       console.error("Error creating pledge:", err);
     }
+  };
+
+  const handleManagePledge = (pledge) => {
+    setSelectedPledge(pledge.pledge_id);
+    console.log("Managing pledge:", pledge);
+    // Add logic to show a popup or perform actions
   };
 
   if (loading || error) {
@@ -131,7 +176,11 @@ export default function Business() {
             getRowId={(row) => row?.pledge_id}
             pageSize={10}
             rowsPerPageOptions={[5]}
-            checkboxSelection
+            disableMultipleRowSelection
+            onRowClick={(row) => {
+              setSelectedPledge(row.row?.pledge_id);
+              console.log("looking at pledge: ", row.row?.pledge_id);
+            }}
             sx={{ height: 600 }}
           />
         </Grid2>
