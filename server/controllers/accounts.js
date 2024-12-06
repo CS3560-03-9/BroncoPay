@@ -1,9 +1,9 @@
-const db = require('../utils/db');
+const db = require("../utils/db");
 
 getAllAccounts = async (req, res) => {
- try {
+  try {
     const accounts = await db.query(
-        "SELECT handler, email, balance, spending_limit FROM `accounts`"
+      "SELECT handler, email, balance, spending_limit, monthly_spent FROM `accounts`"
     );
     return res.status(200).json({
       status: "success",
@@ -30,7 +30,7 @@ getHandlerAccount = async (req, res) => {
   }
   try {
     const account = await db.query(
-      "SELECT handler, email, balance, spending_limit FROM `accounts` WHERE `handler` = ?",
+      "SELECT handler, email, balance, spending_limit, monthly_spent FROM `accounts` WHERE `handler` = ?",
       [handler]
     );
     if (account.length === 0) {
@@ -155,8 +155,8 @@ resetMonthlySpent = async (req, res) => {
   }
   try {
     await db.query(
-        'UPDATE `accounts` SET `monthly_spent` = 0 WHERE `handler` = ?',
-        [handler]
+      "UPDATE `accounts` SET `monthly_spent` = 0 WHERE `handler` = ?",
+      [handler]
     );
     return res.status(204).json({
       status: "success",
@@ -168,55 +168,51 @@ resetMonthlySpent = async (req, res) => {
       message: err.message,
     });
   }
-}
+};
 
 async function changeBalance(handler, amount) {
-    return await db.query(
-        'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?',
-        [amount, handler]
-    );
+  return await db.query(
+    "UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?",
+    [amount, handler]
+  );
 }
 
 async function changeMonthlySpent(handler, amount) {
   return await db.query(
-      'UPDATE `accounts` SET `monthly_spent` = `monthly_spent` + ? WHERE `handler` = ?',
-      [amount, handler]
+    "UPDATE `accounts` SET `monthly_spent` = `monthly_spent` + ? WHERE `handler` = ?",
+    [amount, handler]
   );
 }
 
 async function existingAccount(handler, email) {
-    let query = "SELECT * FROM 'accounts' WHERE ";
-    const params = [];
+  let query = "SELECT * FROM 'accounts' WHERE ";
+  const params = [];
 
-    if (email) {
-        query += "`email` = ?";
-        params.push(email);
-    }
+  if (email) {
+    query += "`email` = ?";
+    params.push(email);
+  }
 
-    if (handler) {
-        if (email) query += " OR ";
-        query += "`handler` = ?";
-        params.push(handler);
-    }
+  if (handler) {
+    if (email) query += " OR ";
+    query += "`handler` = ?";
+    params.push(handler);
+  }
 
-    return await db.query(
-        query,
-        params
-    );
+  return await db.query(query, params);
 }
 
 async function getAccountByHandler(handler) {
   return await db.query(
-      "SELECT handler, email, balance, spending_limit FROM `accounts` WHERE `handler` = ?",
-      [handler]
-  ); 
+    "SELECT handler, email, balance, spending_limit, monthly_spent FROM `accounts` WHERE `handler` = ?",
+    [handler]
+  );
 }
 
 async function accountExists(handler) {
-    return await db.query(
-      "SELECT * FROM `accounts` WHERE `handler` = ?",
-      [handler]
-    );
+  return await db.query("SELECT * FROM `accounts` WHERE `handler` = ?", [
+    handler,
+  ]);
 }
 
 module.exports = {
@@ -228,5 +224,5 @@ module.exports = {
   changeBalance,
   accountExists,
   changeMonthlySpent,
-  resetMonthlySpent
+  resetMonthlySpent,
 };

@@ -16,8 +16,6 @@ import {
 
 import PaymentConfirmationForm from "./PaymentConfirmationForm";
 
-import { depositMoney } from "../../api/transactions";
-
 // Transaction Types: DEPOSIT, WITHDRAW, TRANSACTION
 // Make icon fontSize: 35
 // handleConfirm callback will return object 'data' = { amount: float, recipient: string, description: string }

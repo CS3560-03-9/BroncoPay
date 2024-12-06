@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Typography, Stack, Box } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
