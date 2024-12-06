@@ -27,20 +27,18 @@ export default function Dashboard() {
   const [activity, setActivity] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
 
-  const tempData = {
-    user: "test3",
-  };
+  const currentHandler = localStorage.getItem("handler");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await fetchUser(tempData.user);
+        const user = await fetchUser(currentHandler);
         setUser(user[0] || {});
 
-        const transactions = await fetchActivity(tempData.user);
+        const transactions = await fetchActivity(currentHandler);
         setActivity(transactions);
 
-        const subscriptions = await fetchSubscriptions(tempData.user);
+        const subscriptions = await fetchSubscriptions(currentHandler);
         setSubscriptions(subscriptions);
 
         setLoading(false);
@@ -84,7 +82,7 @@ export default function Dashboard() {
         <Grid2 size={16}>
           <DashboardTransactionHistory
             entries={activity}
-            user={tempData.user}
+            user={currentHandler}
           />
         </Grid2>
       </Grid2>

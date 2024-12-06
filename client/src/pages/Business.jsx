@@ -31,10 +31,7 @@ export default function Business() {
   const [pledgeDialogOpen, setPledgeDialogOpen] = useState(false); // New pledge dialog
   const [managePledgeDialogOpen, setManagePledgeDialog] = useState(false); // Manage pledge dialog
 
-  const tempData = {
-    user: "test3", // test3 and test4 are the only businesses in the system
-    // no other user should be able to see this page
-  };
+  const currentHandler = localStorage.getItem("handler");
 
   const PLEDGES_COLUMNS = [
     { field: "pledge_id", headerName: "ID", width: 90 },
@@ -84,8 +81,8 @@ export default function Business() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await fetchUser(tempData.user);
-        const pledges = await fetchPledges(tempData.user);
+        const user = await fetchUser(currentHandler);
+        const pledges = await fetchPledges(currentHandler);
 
         setUser(user[0]);
         setPledges(pledges);
@@ -103,7 +100,7 @@ export default function Business() {
   const handleWithdraw = async (data) => {
     const { amount, description } = data;
     try {
-      await withdrawMoney(tempData.user, amount, description);
+      await withdrawMoney(currentHandler, amount, description);
     } catch (error) {
       console.error("Error during withdrawal:", error);
     }
@@ -113,7 +110,7 @@ export default function Business() {
     const { cost, interval, desc } = data;
 
     try {
-      await createPledge(tempData.user, cost, interval, desc);
+      await createPledge(currentHandler, cost, interval, desc);
       window.location.reload();
     } catch (err) {
       console.error("Error creating pledge:", err);

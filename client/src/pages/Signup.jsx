@@ -16,9 +16,8 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
   const handleSignUp = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     try {
       const response = await fetch("http://localhost:3000/auth/signup", {
@@ -95,12 +94,7 @@ export default function SignUp() {
             {error}
           </Typography>
         )}
-        <Button
-          type="submit"
-          variant="outlined"
-          color="primary"
-          sx={{ mt: 4 }}
-        >
+        <Button type="submit" variant="outlined" color="primary" sx={{ mt: 4 }}>
           Sign up
         </Button>
         <Divider variant="middle" sx={{ my: 3 }} />

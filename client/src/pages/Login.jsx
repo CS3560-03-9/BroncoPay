@@ -20,16 +20,14 @@ export default function Login() {
         console.log(
           `Received Provider: ${provider.name}, Email: ${formData.get("email")}, Password: ${formData.get("password")}`
         );
+        const handler = formData.get("email").split("@")[0];
+        localStorage.setItem("handler", handler);
       } else if (provider.id === "google") {
         console.log(`Received Provider: ${provider.name}`);
         throw new Error("Google sign in is not implemented yet.");
-        // ** TODO: Handle google oauth here **
       }
 
-      // ** TODO: Do some oauth/api shenanigans here **
-
-      // Assuming successful
-      navigate("/"); // redirect to dashboard
+      navigate("/");
     } catch (err) {
       console.log(err);
       alert("Error signing in. Please try again.");
