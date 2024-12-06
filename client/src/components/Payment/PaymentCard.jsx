@@ -92,6 +92,16 @@ export default function PaymentCard({
   };
 
   const handleNext = () => {
+    if (transaction_type === "TRANSACTION" && step === 1) {
+      const data = {
+        amount: parseFloat(amount),
+        recipient: transaction_type === "TRANSACTION" ? recipient : null,
+        description,
+      };
+      handleConfirm(data);
+      setStep(3);
+      return;
+    }
     setStep((prevStep) => prevStep + 1);
   };
 
@@ -211,7 +221,7 @@ export default function PaymentCard({
           )}
 
           {/* SECOND STEP */}
-          {step === 2 && (
+          {step === 2 && transaction_type !== "TRANSACTION" && (
             <Box>
               <Typography variant="h5" textAlign="left" sx={{ mb: 2 }}>
                 Payment Information
@@ -360,7 +370,11 @@ export default function PaymentCard({
           {/* THIRD STEP */}
           {/* Transaction Types: DEPOSIT, WITHDRAW, TRANSACTION */}
           {step === 3 && (
-            <PaymentConfirmationForm type={transaction_type} balance={amount} />
+            <PaymentConfirmationForm
+              type={transaction_type}
+              balance={amount}
+              recipient={recipient}
+            />
           )}
 
           <Stack
