@@ -70,10 +70,12 @@ export default function Dashboard() {
           <Stack spacing={3}>
             <AccountBalanceCard balance={user?.balance || 0} />
             <DashboardMonthlySpending balance={user?.monthly_spent} />
-            <DashboardSpendingLimit
-              balance={user?.monthly_spent}
-              limit={user?.spending_limit || 0}
-            />
+            {user?.spending_limit ? (
+              <DashboardSpendingLimit
+                balance={user?.monthly_spent}
+                limit={user?.spending_limit || 0}
+              />
+            ) : null}
             <DashboardMonthlyBill subscriptions={subscriptions} />
           </Stack>
         </Grid2>
