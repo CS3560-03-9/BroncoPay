@@ -64,32 +64,32 @@ CREATE TABLE subscriptions (
 INSERT INTO accounts (handler, email, password, balance, monthly_spent, spending_limit) VALUES
 ('test1', 'test1@gmail.com', '$2b$10$bSPgtO.JCQwFOKol8Scvw.p5e13vTHYQqC4YowJ7bDozIjhthcBHK', 123, 1, 10),
 ('test2', 'test2@gmail.com', '$2b$10$dWkROd/5MHoVZJxNI4w3WeTM9rWAOd8QE2peN3eKOJkzHykdfJGY6', 143, 2, 7),
-('test3', 'test3@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 3, 140),
+('Gym', 'Gym@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 3, 140),
 ('test4', 'test4@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 0, 4, 11),
 ('test5', 'test5@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 334, 5, 23);
 
 INSERT INTO account_details (handler, display_name, dob, account_desc) VALUES
 ('test1', 'test1', '1990-01-01', 'test1'),
 ('test2', 'test2', '1990-01-01', 'test2'),
-('test3', 'test3', '1990-01-01', 'test3'),
+('Gym', 'Gym', '1990-01-01', 'Gym'),
 ('test4', 'test4', '1990-01-01', 'test4'),
 ('test5', 'test5', '1990-01-01', 'test5');
 
 INSERT INTO transactions (from_handler, to_handler, amount, transaction_desc, transaction_type) VALUES
 ('test1', 'test2', 123, 'money', "TRANSACTION"),
-('test3', 'test2', 333, 'money2', "TRANSACTION"),
+('Gym', 'test2', 333, 'money2', "TRANSACTION"),
 ('test1', 'test2', 1, 'mone3', "TRANSACTION"),
 ('test4', 'test5', 235, 'mone4y', "TRANSACTION"),
 ('test1', 'test2', 78, 'mon6ey', "TRANSACTION");
 
 INSERT INTO businesses (handler) VALUES
-('test3'),
+('Gym'),
 ('test4');
 
 INSERT INTO pledges (handler, cost, pledge_interval, pledge_desc) VALUES
-('test3', 100, 30, 'pledge1'),
-('test3', 200, 30, 'pledge2'),
-('test3', 300, 30, 'pledge3'),
+('Gym', 100, 30, 'Tier 1 Membership'),
+('Gym', 200, 30, 'Tier 2 Membership'),
+('Gym', 300, 30, 'Tier 3 Membership'),
 ('test4', 400, 30, 'pledge1'),
 ('test4', 500, 30, 'pledge2');
 
