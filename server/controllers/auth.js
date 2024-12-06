@@ -5,32 +5,32 @@ dotenv.config();
 const db = require("../utils/db");
 
 signup = async (req, res) => {
-  const { handler, password, email } = req.body;
-
-  if (!handler || !password || !email) {
-    return res.status(400).json({ 
-      status: "fail", 
-      message: "Handler, Password, and Email are required" 
-    });
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const existingAccount = await db.query(
-    "SELECT * FROM `accounts` WHERE `email` = ? OR `handler` = ?",
-    [email, handler]
-  );
-  if (existingAccount.length > 0) {
-    return res.status(400).json({
-      status: "fail",
-      message: "User Exists",
-    });
-  }
-
   try {
+    const { handler, password, email } = req.body;
+
+    if (!handler || !password || !email) {
+      return res.status(400).json({ 
+        status: "fail", 
+        message: "Handler, Password, and Email are required" 
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const existingAccount = await db.query(
+      "SELECT * FROM `accounts` WHERE `email` = ? OR `handler` = ?",
+      [email, handler]
+    );
+    if (existingAccount.length > 0) {
+      return res.status(400).json({
+        status: "fail",
+        message: "User Exists",
+      });
+    }
+
     await db.query(
-      "INSERT INTO `accounts` (`handler`, `password`, `email`,`spending_limit`, `balance`) VALUES (?, ?, ?, ?, ?)",
-      [handler, hashedPassword, email, 0, 0]
+      "INSERT INTO `accounts` (`handler`, `password`, `email`,`spending_limit`, `monthly_spent`, `balance`) VALUES (?, ?, ?, ?, ?, ?)",
+      [handler, hashedPassword, email, 0, 0, 0]
     );
     return res.status(201).json({
       status: "success",

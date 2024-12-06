@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const db = require('./utils/db');
 
 require('dotenv').config();
 
@@ -29,5 +30,12 @@ app.use('/businesses', businessesRouter);
 app.use('/pledges', pledgesRouter);
 app.use('/subscriptions', subscriptionsRouter);
 app.use('/auth',authRouter);
+
+db.checkConnection().then(isConnected => {
+    if (!isConnected) {
+        console.error('Failed to connect to the database. Exiting...');
+        process.exit(1);
+    }
+});
 
 module.exports = app;

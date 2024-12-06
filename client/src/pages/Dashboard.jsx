@@ -29,7 +29,6 @@ export default function Dashboard() {
 
   const tempData = {
     user: "test3",
-    monthly_spending: 100,
   };
 
   useEffect(() => {
@@ -70,11 +69,13 @@ export default function Dashboard() {
         <Grid2 size={4}>
           <Stack spacing={3}>
             <AccountBalanceCard balance={user?.balance || 0} />
-            <DashboardMonthlySpending balance={tempData.monthly_spending} />
-            <DashboardSpendingLimit
-              balance={tempData.monthly_spending}
-              limit={user?.spending_limit || 0}
-            />
+            <DashboardMonthlySpending balance={user?.monthly_spent} />
+            {user?.spending_limit ? (
+              <DashboardSpendingLimit
+                balance={user?.monthly_spent}
+                limit={user?.spending_limit || 0}
+              />
+            ) : null}
             <DashboardMonthlyBill subscriptions={subscriptions} />
           </Stack>
         </Grid2>

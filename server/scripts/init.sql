@@ -92,3 +92,15 @@ INSERT INTO pledges (handler, cost, pledge_interval, pledge_desc) VALUES
 ('test3', 300, 30, 'pledge3'),
 ('test4', 400, 30, 'pledge1'),
 ('test4', 500, 30, 'pledge2');
+
+INSERT INTO subscriptions (handler, pledge_id) VALUES
+('test1', 1),
+('test2', 1),
+('test3', 2),
+('test4', 2),
+('test5', 3),
+('test1', 4),
+('test2', 4),
+('test3', 5),
+('test4', 5),
+('test5', 1);

@@ -18,6 +18,7 @@ import { fetchPledges, createPledge } from "../api/pledges";
 import { fetchUser } from "../api/accounts";
 import { withdrawMoney } from "../api/transactions";
 import BusinessNewPledgeForm from "../components/Business/BusinessNewPledgeForm";
+import BusinessManagePledgePopup from "../components/Business/BusinessManagePledgePopup";
 
 export default function Business() {
   const [loading, setLoading] = useState(true);
@@ -25,10 +26,10 @@ export default function Business() {
 
   const [user, setUser] = useState(null);
   const [pledges, setPledges] = useState([]);
+  const [selectedPledge, setSelectedPledge] = useState(null);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false); // Withdraw dialog
   const [pledgeDialogOpen, setPledgeDialogOpen] = useState(false); // New pledge dialog
-
-  const [selectedPledge, setSelectedPledge] = useState(null); // pledge id
+  const [managePledgeDialogOpen, setManagePledgeDialog] = useState(false); // Manage pledge dialog
 
   const tempData = {
     user: "test3", // test3 and test4 are the only businesses in the system
@@ -120,9 +121,8 @@ export default function Business() {
   };
 
   const handleManagePledge = (pledge) => {
-    setSelectedPledge(pledge.pledge_id);
-    console.log("Managing pledge:", pledge);
-    // Add logic to show a popup or perform actions
+    setManagePledgeDialog(true);
+    setSelectedPledge(pledge);
   };
 
   if (loading || error) {
@@ -177,10 +177,6 @@ export default function Business() {
             pageSize={10}
             rowsPerPageOptions={[5]}
             disableMultipleRowSelection
-            onRowClick={(row) => {
-              setSelectedPledge(row.row?.pledge_id);
-              console.log("looking at pledge: ", row.row?.pledge_id);
-            }}
             sx={{ height: 600 }}
           />
         </Grid2>
@@ -199,6 +195,13 @@ export default function Business() {
         open={pledgeDialogOpen}
         handleClose={() => setPledgeDialogOpen(false)}
         onCreatePledge={handleCreatePledge}
+      />
+
+      {/* Popup for managing a pledge */}
+      <BusinessManagePledgePopup
+        open={managePledgeDialogOpen}
+        handleClose={() => setManagePledgeDialog(false)}
+        pledge={selectedPledge}
       />
     </Box>
   );
