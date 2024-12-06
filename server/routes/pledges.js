@@ -27,4 +27,25 @@ router.post(
     pledgeController.createPledge
 );
 
+// Get Handlers by Pledge
+router.get(
+    '/pledge/:id',
+    authToken.authenticateToken,
+    pledgeController.getHandlersWithPledge
+);
+
+// Delete Pledge
+router.delete(
+    '/:id',
+    authToken.authenticateToken,
+    pledgeController.deletePledge
+);
+
+// Get All Pledges
+router.get(
+    '/',
+    authToken.authenticateToken,
+    pledgeController.getAllPledges
+)
+
 module.exports = router;

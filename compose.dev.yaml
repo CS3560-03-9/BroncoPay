@@ -1,13 +1,8 @@
 services:
   mysql:
     image: mysql:9.1.0
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: bronco
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
@@ -15,5 +10,7 @@ services:
       retries: 10
     volumes:
       - ./server/scripts:/docker-entrypoint-initdb.d:ro
+    env_file:
+      - ./server/.env
 volumes:
   db:

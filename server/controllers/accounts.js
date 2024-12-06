@@ -131,6 +131,19 @@ deleteAccount = async (req, res) => {
       "DELETE FROM `accounts` WHERE `handler` = ?",
       [handler]
     );
+
+    const transactionsDeletion = await db.query(
+      "DELETE FROM `transactions` WHERE `from_handler` = ? OR `to_handler` = ?",
+      [handler, handler]
+    );
+
+    if (transactionsDeletion.length > 0 || deletion.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        message: 'Error',
+      });
+    }
+    
     return res.status(204).json({
       status: "success",
       data: "Account Deletion Successful",

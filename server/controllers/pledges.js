@@ -99,6 +99,102 @@ createPledge = async (req, res) => {
     }
 }
 
+deletePledge = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({
+                status: "fail",
+                data: {
+                handler: "id is missing",
+                },
+            });
+        }
+
+        // Deletes subscriptions
+        await db.query(
+            "DELETE FROM `subscriptions` WHERE `pledge_id` = ?",
+            [id]
+        );
+
+        // Delete pledges
+        const deletion = await db.query(
+            "DELETE FROM `pledges` WHERE `pledge_id` = ?",
+            [id]
+        );
+
+        if (deletion.affectedRows === 0) {
+            return res.status(404).json({
+                status: "fail",
+                data: {
+                    handler: "Pledge not found",
+                },
+            });
+        }
+
+        return res.status(204).json({
+            status: "success",
+            data: "Account Deletion Successful",
+        });
+
+    } catch (err) {
+      return res.status(500).json({
+        status: "error",
+        message: err.message,
+      });
+    }
+  };
+
+getHandlersWithPledge = async (req, res) => {
+    try {
+        const {id} = req.params;
+        if (!id) {
+            return res.status(400).json({
+                status: "fail",
+                data: {
+                handler: "id is missing",
+                },
+            });
+        }
+
+        console.log(id);
+        const handlers = await db.query(
+            'SELECT `handler` FROM `subscriptions` WHERE `pledge_id` = ?',
+            [id]
+        )
+
+        return res.status(200).json({
+            status: "success",
+            data: {
+                handlers: handlers,
+            }
+        })
+    } catch(err) {
+        return res.status(500).json({
+            status: "error",
+            message: err.message,
+        });
+    }
+}
+
+getAllPledges = async (req, res) => {
+    try {
+        const pledges = await db.query('SELECT * FROM `pledges`');
+        res.status(200).json({
+            status: 'success',
+            data: {
+                pledges: pledges,
+            },
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: 'error',
+            message: err.message,
+        });
+    }
+}
+
 async function getPledgeWithId(Id) {
     return await db.query(
         'SELECT * FROM `pledges` WHERE `pledge_id` = ?', 
@@ -110,5 +206,8 @@ module.exports = {
     getPledges,
     getPledgebyId,
     createPledge,
+    deletePledge,
+    getHandlersWithPledge,
+    getAllPledges,
     getPledgeWithId
 }
