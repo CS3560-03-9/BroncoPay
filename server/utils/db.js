@@ -1,11 +1,12 @@
 const mysql = require('mysql2/promise');
+require('dotenv').config();
 
 const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 3306,
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT || 3306,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
     connectionLimit: 10,
 });
 
@@ -18,4 +19,15 @@ async function query(sql, data) {
 	}
 }
 
-module.exports = {query};
+async function checkConnection() {
+    try {
+        await pool.query('SELECT 1');
+        console.log('Database connection successful');
+        return true;
+    } catch (err) {
+        console.error('Database connection failed:', err);
+        return false;
+    }
+}
+
+module.exports = {query, checkConnection};
