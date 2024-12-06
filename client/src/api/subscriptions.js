@@ -29,7 +29,7 @@ export async function fetchSubscriptions(handler) {
  */
 export async function fetchPledgeList(handler) {
   try {
-    const response = await fetch(`${BASE_URL}/pledges/${handler}`);
+    const response = await fetch(`${BASE_URL}/pledges/handler/${handler}`);
     const { status, data } = await response.json();
 
     if (!response.ok || status !== "success") {
@@ -48,7 +48,7 @@ export async function fetchPledgeList(handler) {
  */
 export async function fetchPledge(pledgeID) {
   try {
-    const response = await fetch(`${BASE_URL}/pledge/${pledgeID}`);
+    const response = await fetch(`${BASE_URL}/pledge/id/${pledgeID}`);
     const { status, data } = await response.json();
 
     if (!response.ok || status !== "success") {
