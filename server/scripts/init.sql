@@ -7,6 +7,7 @@ CREATE TABLE accounts (
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     balance INT NOT NULL,
+    monthly_spent INT NOT NULL,
     spending_limit INT NOT NULL,
     UNIQUE (email),
     PRIMARY KEY (handler)
@@ -60,12 +61,12 @@ CREATE TABLE subscriptions (
     FOREIGN KEY (pledge_id) REFERENCES pledges(pledge_id) ON DELETE CASCADE
 );
 
-INSERT INTO accounts (handler, email, password, balance, spending_limit) VALUES
-('test1', 'test1@gmail.com', '$2b$10$bSPgtO.JCQwFOKol8Scvw.p5e13vTHYQqC4YowJ7bDozIjhthcBHK', 123, 10),
-('test2', 'test2@gmail.com', '$2b$10$dWkROd/5MHoVZJxNI4w3WeTM9rWAOd8QE2peN3eKOJkzHykdfJGY6', 143, 7),
-('test3', 'test3@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 140),
-('test4', 'test4@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 0, 11),
-('test5', 'test5@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 334, 23);
+INSERT INTO accounts (handler, email, password, balance, monthly_spent, spending_limit) VALUES
+('test1', 'test1@gmail.com', '$2b$10$bSPgtO.JCQwFOKol8Scvw.p5e13vTHYQqC4YowJ7bDozIjhthcBHK', 123, 1, 10),
+('test2', 'test2@gmail.com', '$2b$10$dWkROd/5MHoVZJxNI4w3WeTM9rWAOd8QE2peN3eKOJkzHykdfJGY6', 143, 2, 7),
+('test3', 'test3@gmail.com', '$2b$10$J63TJgqZwwE.TfQdeAgdou952uk6nyx0jASMqFuwggnra/I2hKRyS', 200, 3, 140),
+('test4', 'test4@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 0, 4, 11),
+('test5', 'test5@gmail.com', '$2b$10$pr9kMv0t.kEwjBlCJxUVIea1XtoWrMe9gWuwarBYvMdy74LqAe2Om', 334, 5, 23);
 
 INSERT INTO account_details (handler, display_name, dob, account_desc) VALUES
 ('test1', 'test1', '1990-01-01', 'test1'),
