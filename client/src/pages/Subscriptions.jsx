@@ -11,23 +11,29 @@ export default function Subscriptions({handler}) {
   const [items, setItems] = useState([]);
 
   const tempData = {
-    user: "test3",
+    user: "test1",
   }
 
 return (
   <>
 <Grid2 container spacing={4} padding={3}>
   <Grid2 size={3} backgroundColor='#212121' height={'30vh'}>
-    <item><p><Pledges handler="test3" index={0}/></p></item>
+    <item><p><Pledges handler={tempData.user} index={0}/></p></item>
   </Grid2>
   <Grid2 size={3} backgroundColor='#212121' height={'30vh'}>
-  <item><p><Pledges handler="test3" index={1}/></p></item>
+  <item><p><Pledges handler={tempData.user}index={1}/></p></item>
   </Grid2>
   <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
-  <item><p><Pledges handler="test3" index={2}/></p></item>
+  <item><p><Pledges handler={tempData.user}index={2}/></p></item>
   </Grid2>
   <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
-  <item><p><Pledges handler="test3" index={3} /></p></item>
+  <item><p><Pledges handler={tempData.user} index={3} /></p></item>
+  </Grid2>
+  <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
+  <item><p><Pledges handler={tempData.user} index={4} /></p></item>
+  </Grid2>
+  <Grid2 size={3}  backgroundColor='#212121' height={'30vh'}>
+  <item><p><Pledges handler={tempData.user} index={5} /></p></item>
   </Grid2>
 </Grid2>
 
