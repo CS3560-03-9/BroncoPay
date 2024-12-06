@@ -29,8 +29,8 @@ signup = async (req, res) => {
     }
 
     await db.query(
-      "INSERT INTO `accounts` (`handler`, `password`, `email`,`spending_limit`, `balance`) VALUES (?, ?, ?, ?, ?)",
-      [handler, hashedPassword, email, 0, 0]
+      "INSERT INTO `accounts` (`handler`, `password`, `email`,`spending_limit`, `monthly_spent`, `balance`) VALUES (?, ?, ?, ?, ?, ?)",
+      [handler, hashedPassword, email, 0, 0, 0]
     );
     return res.status(201).json({
       status: "success",
