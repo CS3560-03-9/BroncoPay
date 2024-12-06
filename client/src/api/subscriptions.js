@@ -1,8 +1,8 @@
 const BASE_URL = "http://localhost:3000";
 
 /**
- * Retrieves all pledges for a specific handler
- * To clarify, every subscription in the output points to a pledge (FK)
+ * Retrieves all subscriptions for a specific handler
+ * To retrieve the subscription info (e.g., pricing), the pledge object is included in each subscription object
  * @param {*} handler
  */
 export async function fetchSubscriptions(handler) {
@@ -29,7 +29,7 @@ export async function fetchSubscriptions(handler) {
  */
 export async function fetchPledgeList(handler) {
   try {
-    const response = await fetch(`${BASE_URL}/pledges/${handler}`);
+    const response = await fetch(`${BASE_URL}/pledges/handler/${handler}`);
     const { status, data } = await response.json();
 
     if (!response.ok || status !== "success") {
@@ -48,7 +48,7 @@ export async function fetchPledgeList(handler) {
  */
 export async function fetchPledge(pledgeID) {
   try {
-    const response = await fetch(`${BASE_URL}/pledge/${pledgeID}`);
+    const response = await fetch(`${BASE_URL}/pledge/id/${pledgeID}`);
     const { status, data } = await response.json();
 
     if (!response.ok || status !== "success") {
