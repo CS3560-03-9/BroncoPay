@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Grid2, Stack } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { useNavigate } from "react-router-dom";
-
 import PageTitle from "../components/PageTitle";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import LoadingPage from "../components/LoadingPage";
@@ -16,9 +14,10 @@ import BusinessActionButton from "../components/Business/BusinessActionButton";
 
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import { fetchPledges } from "../api/pledges";
+import { fetchPledges, createPledge } from "../api/pledges";
 import { fetchUser } from "../api/accounts";
 import { withdrawMoney } from "../api/transactions";
+import BusinessNewPledgeForm from "../components/Business/BusinessNewPledgeForm";
 
 export default function Business() {
   const [loading, setLoading] = useState(true);
@@ -27,6 +26,7 @@ export default function Business() {
   const [user, setUser] = useState(null);
   const [pledges, setPledges] = useState([]);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false); // Withdraw dialog
+  const [pledgeDialogOpen, setPledgeDialogOpen] = useState(false); // New pledge dialog
 
   const tempData = {
     user: "test3", // test3 and test4 are the only businesses in the system
@@ -69,6 +69,17 @@ export default function Business() {
     }
   };
 
+  const handleCreatePledge = async (data) => {
+    const { cost, interval, desc } = data;
+
+    try {
+      await createPledge(tempData.user, cost, interval, desc);
+      window.location.reload();
+    } catch (err) {
+      console.error("Error creating pledge:", err);
+    }
+  };
+
   if (loading || error) {
     return <LoadingPage />;
   }
@@ -88,6 +99,7 @@ export default function Business() {
                 <BusinessActionButton
                   text={"New Pledge"}
                   icon={<CurrencyExchangeIcon sx={{ fontSize: 40 }} />}
+                  onClick={() => setPledgeDialogOpen(true)}
                 />
               </Grid2>
 
@@ -131,6 +143,13 @@ export default function Business() {
         handleClose={() => setWithdrawDialogOpen(false)}
         user={user}
         onWithdraw={handleWithdraw}
+      />
+
+      {/* Popup form for creating a new pledge */}
+      <BusinessNewPledgeForm
+        open={pledgeDialogOpen}
+        handleClose={() => setPledgeDialogOpen(false)}
+        onCreatePledge={handleCreatePledge}
       />
     </Box>
   );
