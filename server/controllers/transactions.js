@@ -50,7 +50,7 @@ createTransaction = async (req, res) => {
         message: 'account(s) does not exist',
       });
     }
-    if (amount > fromAccount[0].spending_limit) {
+    if (amount > fromAccount[0].spending_limit - fromAccount[0].monthly_spent) {
       return res.status(400).json({
         status: 'fail',
         message: 'amount is greater than spending limit',
@@ -62,6 +62,7 @@ createTransaction = async (req, res) => {
         message: 'amount is greater than balance',
       });
     }
+    await accountsController.changeMonthlySpent(fromHandler, amount);
     await accountsController.changeBalance(fromHandler, -amount);
     await accountsController.changeBalance(toHandler, amount);
 
@@ -77,7 +78,7 @@ createTransaction = async (req, res) => {
     );
 
     return res.status(200).json({
-        status: 'succuss',
+        status: 'success',
         message: 'Transaction complete!',
     });
 
@@ -132,7 +133,7 @@ createDeposit = async (req, res) => {
 createWithdraw = async (req, res) => {
   try {
     const {handler, amount, description} = req.body;
-    
+
     const validation = validationResult(req);
     if (!validation.isEmpty()) {
       return res.status(400).json({

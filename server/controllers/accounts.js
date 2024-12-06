@@ -143,11 +143,45 @@ deleteAccount = async (req, res) => {
   }
 };
 
+resetMonthlySpent = async (req, res) => {
+  const { handler } = req.params;
+  if (!handler) {
+    return res.status(400).json({
+      status: "fail",
+      data: {
+        handler: "handler is missing",
+      },
+    });
+  }
+  try {
+    await db.query(
+        'UPDATE `accounts` SET `monthly_spent` = 0 WHERE `handler` = ?',
+        [handler]
+    );
+    return res.status(204).json({
+      status: "success",
+      data: "monthly spent reset successful",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+}
+
 async function changeBalance(handler, amount) {
     return await db.query(
         'UPDATE `accounts` SET `balance` = `balance` + ? WHERE `handler` = ?',
         [amount, handler]
     );
+}
+
+async function changeMonthlySpent(handler, amount) {
+  return await db.query(
+      'UPDATE `accounts` SET `monthly_spent` = `monthly_spent` + ? WHERE `handler` = ?',
+      [amount, handler]
+  );
 }
 
 async function existingAccount(handler, email) {
@@ -192,5 +226,7 @@ module.exports = {
   deleteAccount,
   getAccountByHandler,
   changeBalance,
-  accountExists
+  accountExists,
+  changeMonthlySpent,
+  resetMonthlySpent
 };
