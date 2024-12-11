@@ -30,14 +30,12 @@ export default function Payment() {
   });
   const [activity, setActivity] = useState([]);
 
-  const tempData = {
-    user: "test3",
-  };
+  const currentHandler = localStorage.getItem("handler");
 
   const handleDepositMoney = (data) => {
     const { amount, description } = data;
     try {
-      depositMoney(tempData.user, amount, description);
+      depositMoney(currentHandler, amount, description);
     } catch (err) {
       console.error(err);
     }
@@ -46,7 +44,7 @@ export default function Payment() {
   const handleTransferMoney = (data) => {
     const { amount, recipient, description } = data;
     try {
-      transferMoney(tempData.user, recipient, amount, description);
+      transferMoney(currentHandler, recipient, amount, description);
     } catch (err) {
       console.error(err);
     }
@@ -57,10 +55,10 @@ export default function Payment() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await fetchUser(tempData.user);
+        const user = await fetchUser(currentHandler);
         setUser(user[0]);
 
-        const transactions = await fetchActivity(tempData.user);
+        const transactions = await fetchActivity(currentHandler);
         setActivity(transactions.slice(0, ACTIVITY_MAX));
 
         setLoading(false);
@@ -90,7 +88,7 @@ export default function Payment() {
           <AccountRecentActivity
             sx={{ mt: 3 }}
             listItems={activity}
-            user={tempData.user}
+            user={currentHandler}
           />
         </Grid2>
 

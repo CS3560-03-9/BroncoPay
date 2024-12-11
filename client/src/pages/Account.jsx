@@ -17,15 +17,12 @@ export default function Account() {
   const [user, setUser] = useState({});
   const [openSpendingLimitDialog, setOpenSpendingLimitDialog] = useState(false);
 
-  const tempData = {
-    user: "test3",
-  };
+  const currentHandler = localStorage.getItem("handler");
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(tempData.user);
       try {
-        const userData = await fetchUser(tempData.user);
+        const userData = await fetchUser(currentHandler);
         setUser(userData[0]);
         console.log(userData);
       } catch (err) {
@@ -40,7 +37,7 @@ export default function Account() {
 
   const handleUpdateSpendingLimit = async (newLimit) => {
     try {
-      await updateSpendingLimit(tempData.user, newLimit);
+      await updateSpendingLimit(currentHandler, newLimit);
       setUser((prevUser) => ({
         ...prevUser,
         spendingLimit: newLimit,

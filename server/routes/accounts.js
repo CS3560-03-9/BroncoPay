@@ -4,7 +4,11 @@ const authToken = require("../middlewares/authMiddleware.js");
 const accountController = require("../controllers/accounts.js");
 
 // Gets all Accounts in Database
-router.get("/", authToken.authenticateToken, accountController.getAllAccounts);
+router.get(
+    "/", 
+    authToken.authenticateToken, 
+    accountController.getAllAccounts
+);
 
 // Gets Handler Account
 router.get(
@@ -25,6 +29,12 @@ router.delete(
   "/:handler",
   authToken.authenticateToken,
   accountController.deleteAccount
+);
+
+router.delete(
+	"/:handler/monthly-spent",
+	authToken.authenticateToken,
+	accountController.resetMonthlySpent
 );
 
 module.exports = router;

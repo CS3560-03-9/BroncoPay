@@ -27,21 +27,18 @@ export default function Dashboard() {
   const [activity, setActivity] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
 
-  const tempData = {
-    user: "test3",
-    monthly_spending: 100,
-  };
+  const currentHandler = localStorage.getItem("handler");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await fetchUser(tempData.user);
+        const user = await fetchUser(currentHandler);
         setUser(user[0] || {});
 
-        const transactions = await fetchActivity(tempData.user);
+        const transactions = await fetchActivity(currentHandler);
         setActivity(transactions);
 
-        const subscriptions = await fetchSubscriptions(tempData.user);
+        const subscriptions = await fetchSubscriptions(currentHandler);
         setSubscriptions(subscriptions);
 
         setLoading(false);
@@ -70,11 +67,13 @@ export default function Dashboard() {
         <Grid2 size={4}>
           <Stack spacing={3}>
             <AccountBalanceCard balance={user?.balance || 0} />
-            <DashboardMonthlySpending balance={tempData.monthly_spending} />
-            <DashboardSpendingLimit
-              balance={tempData.monthly_spending}
-              limit={user?.spending_limit || 0}
-            />
+            <DashboardMonthlySpending balance={user?.monthly_spent} />
+            {user?.spending_limit ? (
+              <DashboardSpendingLimit
+                balance={user?.monthly_spent}
+                limit={user?.spending_limit || 0}
+              />
+            ) : null}
             <DashboardMonthlyBill subscriptions={subscriptions} />
           </Stack>
         </Grid2>
@@ -83,7 +82,7 @@ export default function Dashboard() {
         <Grid2 size={16}>
           <DashboardTransactionHistory
             entries={activity}
-            user={tempData.user}
+            user={currentHandler}
           />
         </Grid2>
       </Grid2>
